@@ -72,11 +72,6 @@ const TestimonialsSection = () => {
             <ChevronRight className="w-6 h-6 text-blue-900" />
           </button>
         </div>
-
-        {/* Indicator text */}
-        <div className="text-center mt-8 text-sm text-gray-500">
-          {language === 'fr' ? 'Défilement automatique' : 'Auto-scrolling'}
-        </div>
       </div>
     </section>
   );
