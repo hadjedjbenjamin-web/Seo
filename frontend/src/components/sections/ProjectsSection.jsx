@@ -26,11 +26,11 @@ const ProjectsSection = () => {
             >
               {/* Project Image */}
               {index === 0 ? (
-                <div className="h-48 md:h-56 lg:h-64 rounded-xl mb-6 overflow-hidden bg-gray-100">
+                <div className="rounded-xl mb-6 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-4">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png" 
                     alt="Plateforme de Trading BK Tech" 
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-auto object-contain"
                   />
                 </div>
               ) : (
