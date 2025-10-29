@@ -60,6 +60,17 @@ const ProjectsSection = () => {
                     className="w-full h-auto object-contain"
                   />
                 </div>
+              ) : index === 2 ? (
+                <div 
+                  className="rounded-xl mb-6 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                  onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/dx2eebs2_dashboard%20analytic%20sans%20fond%20d%20ecran.png')}
+                >
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/dx2eebs2_dashboard%20analytic%20sans%20fond%20d%20ecran.png" 
+                    alt="Dashboard Analytics BK Tech" 
+                    className="w-full h-auto object-contain"
+                  />
+                </div>
               ) : (
                 <div className="bg-gradient-to-br from-blue-100 to-cyan-100 h-48 md:h-56 lg:h-64 rounded-xl mb-6 flex items-center justify-center">
                   <div className="text-6xl font-bold text-white/50">{index + 1}</div>
