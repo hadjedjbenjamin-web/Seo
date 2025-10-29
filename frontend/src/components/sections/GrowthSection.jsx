@@ -37,13 +37,13 @@ const GrowthSection = () => {
         </div>
 
         {/* Growth Chart */}
-        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mb-12">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+        <div className="bg-white p-4 md:p-8 rounded-2xl shadow-lg border border-gray-100 mb-12">
+          <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">
             {language === 'fr' ? 'Évolution du Chiffre d\'Affaires' : 'Revenue Growth'}
           </h3>
           
-          {/* Simple Bar Chart */}
-          <div className="flex items-end justify-between h-96 gap-4 px-4">
+          {/* Simple Bar Chart - Responsive */}
+          <div className="flex items-end justify-between h-64 md:h-96 gap-2 md:gap-4 px-2 md:px-4">
             {t.stats.map((stat, index) => {
               const maxRevenue = 21;
               // Extract numeric value (1.4M€ -> 1.4)
@@ -52,22 +52,22 @@ const GrowthSection = () => {
               
               return (
                 <div key={index} className="flex-1 flex flex-col items-center">
-                  <div className="w-full flex flex-col items-center justify-end" style={{ height: '320px' }}>
+                  <div className="w-full flex flex-col items-center justify-end" style={{ height: '200px' }}>
                     <div className="relative w-full group">
                       {/* Value label - always visible */}
-                      <div className="mb-2 text-center font-bold text-blue-600 text-lg">
+                      <div className="mb-1 md:mb-2 text-center font-bold text-blue-600 text-xs md:text-lg">
                         {stat.revenue}
                       </div>
                       {/* Bar */}
                       <div
-                        className="w-full bg-gradient-to-t from-blue-600 to-cyan-400 rounded-t-lg transition-all duration-500 hover:opacity-80 hover:scale-105"
-                        style={{ height: `${heightPercent}%` }}
+                        className="w-full bg-gradient-to-t from-blue-600 to-cyan-400 rounded-t-lg transition-all duration-500 hover:opacity-80 md:hover:scale-105"
+                        style={{ height: `${heightPercent}%`, minHeight: '20px' }}
                       >
                       </div>
                     </div>
                   </div>
                   {/* Year label */}
-                  <div className="mt-4 font-bold text-gray-700 text-lg">{stat.year}</div>
+                  <div className="mt-2 md:mt-4 font-bold text-gray-700 text-sm md:text-lg">{stat.year}</div>
                 </div>
               );
             })}
