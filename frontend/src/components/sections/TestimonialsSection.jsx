@@ -8,7 +8,7 @@ const TestimonialsSection = () => {
   const t = translations[language].testimonials;
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-16 bg-white relative overflow-hidden">
       <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
