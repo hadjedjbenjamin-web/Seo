@@ -51,7 +51,7 @@ const ProjectsSection = () => {
                 </div>
               ) : index === 1 ? (
                 <div 
-                  className="rounded-xl mb-6 overflow-hidden bg-white p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                  className="rounded-xl mb-6 overflow-hidden bg-white p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300 border-2 border-blue-500 shadow-lg shadow-blue-200/50"
                   onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/piq1wh9l_crypto%20sans%20fond%20d%27ecran.png')}
                 >
                   <img 
@@ -62,7 +62,7 @@ const ProjectsSection = () => {
                 </div>
               ) : index === 2 ? (
                 <div 
-                  className="rounded-xl mb-6 overflow-hidden bg-white p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                  className="rounded-xl mb-6 overflow-hidden bg-white p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300 border-2 border-blue-500 shadow-lg shadow-blue-200/50"
                   onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/dx2eebs2_dashboard%20analytic%20sans%20fond%20d%20ecran.png')}
                 >
                   <img 
