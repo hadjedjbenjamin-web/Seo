@@ -43,7 +43,7 @@ const GrowthSection = () => {
           </h3>
           
           {/* Simple Bar Chart - Responsive */}
-          <div className="flex items-end justify-between h-64 md:h-96 gap-2 md:gap-4 px-2 md:px-4">
+          <div className="flex items-end justify-between h-72 md:h-96 gap-2 md:gap-4 px-2 md:px-4">
             {t.stats.map((stat, index) => {
               const maxRevenue = 21;
               // Extract numeric value (1.4M€ -> 1.4)
@@ -52,7 +52,7 @@ const GrowthSection = () => {
               
               return (
                 <div key={index} className="flex-1 flex flex-col items-center">
-                  <div className="w-full flex flex-col items-center justify-end" style={{ height: '200px' }}>
+                  <div className="w-full flex flex-col items-center justify-end" style={{ height: '220px' }}>
                     <div className="relative w-full group">
                       {/* Value label - always visible */}
                       <div className="mb-1 md:mb-2 text-center font-bold text-blue-600 text-xs md:text-lg">
