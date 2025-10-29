@@ -40,7 +40,7 @@ const ProjectsSection = () => {
               {/* Project Image */}
               {index === 0 ? (
                 <div 
-                  className="rounded-xl mb-6 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                  className="rounded-xl mb-6 overflow-hidden bg-white p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300 border-2 border-blue-500 shadow-lg shadow-blue-200/50"
                   onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png')}
                 >
                   <img 
