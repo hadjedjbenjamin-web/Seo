@@ -76,8 +76,8 @@ export const translations = {
           description: 'Visualisation de données et business intelligence'
         },
         {
-          title: 'Plateforme E-Learning',
-          description: 'Solution complète de formation en ligne'
+          title: 'Nos projets sur mesure',
+          description: 'Solutions personnalisées adaptées à vos besoins'
         }
       ]
     },
