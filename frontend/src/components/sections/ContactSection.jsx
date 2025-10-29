@@ -175,14 +175,6 @@ const ContactSection = () => {
                 </div>
               </div>
             </div>
-
-            {/* QR Code Placeholder */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-              <h3 className="font-semibold text-gray-900 mb-4 text-center">LinkedIn QR Code</h3>
-              <div className="bg-gradient-to-br from-gray-100 to-gray-200 h-48 rounded-lg flex items-center justify-center">
-                <p className="text-gray-500 text-sm">QR Code Placeholder</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
