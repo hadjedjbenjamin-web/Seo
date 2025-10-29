@@ -43,7 +43,7 @@ const GrowthSection = () => {
           </h3>
           
           {/* Simple Bar Chart */}
-          <div className="flex items-end justify-between h-80 gap-4">
+          <div className="flex items-end justify-between h-96 gap-4 px-4">
             {t.stats.map((stat, index) => {
               const maxRevenue = 850;
               const revenueValue = parseInt(stat.revenue);
@@ -51,22 +51,22 @@ const GrowthSection = () => {
               
               return (
                 <div key={index} className="flex-1 flex flex-col items-center">
-                  <div className="w-full flex flex-col items-center justify-end h-full">
+                  <div className="w-full flex flex-col items-center justify-end" style={{ height: '320px' }}>
                     <div className="relative w-full group">
+                      {/* Value label - always visible */}
+                      <div className="mb-2 text-center font-bold text-blue-600 text-lg">
+                        {stat.revenue}
+                      </div>
                       {/* Bar */}
                       <div
-                        className="w-full bg-gradient-to-t from-blue-600 to-cyan-400 rounded-t-lg transition-all duration-500 hover:opacity-80"
+                        className="w-full bg-gradient-to-t from-blue-600 to-cyan-400 rounded-t-lg transition-all duration-500 hover:opacity-80 hover:scale-105"
                         style={{ height: `${heightPercent}%` }}
                       >
-                        {/* Value on hover */}
-                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 text-white px-3 py-1 rounded text-sm font-semibold whitespace-nowrap">
-                          {stat.revenue}
-                        </div>
                       </div>
                     </div>
                   </div>
                   {/* Year label */}
-                  <div className="mt-4 font-bold text-gray-700">{stat.year}</div>
+                  <div className="mt-4 font-bold text-gray-700 text-lg">{stat.year}</div>
                 </div>
               );
             })}
