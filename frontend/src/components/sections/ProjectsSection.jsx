@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { translations } from '../../mock';
+import { X } from 'lucide-react';
 
 const ProjectsSection = () => {
   const { language } = useLanguage();
   const t = translations[language].projects;
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   return (
     <section id="projects" className="py-16 bg-white relative overflow-hidden">
@@ -26,7 +28,10 @@ const ProjectsSection = () => {
             >
               {/* Project Image */}
               {index === 0 ? (
-                <div className="rounded-xl mb-6 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-4">
+                <div 
+                  className="rounded-xl mb-6 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                  onClick={() => setIsImageOpen(true)}
+                >
                   <img 
                     src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png" 
                     alt="Plateforme de Trading BK Tech" 
@@ -45,6 +50,30 @@ const ProjectsSection = () => {
           ))}
         </div>
       </div>
+
+      {/* Image Modal/Lightbox */}
+      {isImageOpen && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 animate-fadeIn"
+          onClick={() => setIsImageOpen(false)}
+        >
+          <button
+            onClick={() => setIsImageOpen(false)}
+            className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-300"
+          >
+            <X className="w-8 h-8 text-white" />
+          </button>
+          
+          <div className="max-w-7xl max-h-[90vh] overflow-auto">
+            <img 
+              src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png" 
+              alt="Plateforme de Trading BK Tech - Vue complète" 
+              className="w-full h-auto object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 };
