@@ -145,6 +145,7 @@ export const translations = {
       mission: 'Our Mission',
       expertise: 'Expertise',
       projects: 'Projects',
+      growth: 'Our Growth',
       team: 'Team',
       contact: 'Contact'
     },
