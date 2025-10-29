@@ -276,6 +276,60 @@ export const translations = {
         }
       ]
     },
+    growth: {
+      title: 'Our Growth since 2021',
+      subtitle: 'Constant evolution driven by innovation',
+      stats: [
+        {
+          year: '2021',
+          revenue: '50K€',
+          clients: 5,
+          projects: 8
+        },
+        {
+          year: '2022',
+          revenue: '150K€',
+          clients: 15,
+          projects: 25
+        },
+        {
+          year: '2023',
+          revenue: '350K€',
+          clients: 35,
+          projects: 50
+        },
+        {
+          year: '2024',
+          revenue: '600K€',
+          clients: 60,
+          projects: 85
+        },
+        {
+          year: '2025',
+          revenue: '850K€',
+          clients: 85,
+          projects: 120
+        }
+      ],
+      highlights: [
+        {
+          number: '150+',
+          label: 'Projects completed'
+        },
+        {
+          number: '85+',
+          label: 'Satisfied clients'
+        },
+        {
+          number: '850K€',
+          label: '2025 Revenue'
+        },
+        {
+          number: '1600%',
+          label: 'Growth since 2021'
+        }
+      ]
+    },
     team: {
       title: 'Leadership Team',
       members: [
