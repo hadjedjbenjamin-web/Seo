@@ -143,8 +143,8 @@ const GrowthSection = () => {
             <TrendingUp className="w-5 h-5 text-green-600" />
             <span className="text-green-700 font-semibold">
               {language === 'fr' 
-                ? '+1600% de croissance depuis notre création' 
-                : '+1600% growth since our creation'}
+                ? '+1400% de croissance depuis notre création' 
+                : '+1400% growth since our creation'}
             </span>
           </div>
         </div>
