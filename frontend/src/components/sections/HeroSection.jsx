@@ -29,7 +29,7 @@ const HeroSection = () => {
           <div className="relative">
             <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 opacity-30 scale-150"></div>
             <img 
-              src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/3ks6etk8_ChatGPT%20Image%2029%20oct.%202025%2C%2008_32_21.png" 
+              src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/jbuevisw_ChatGPT_Image_29_oct._2025__08_32_21-removebg-preview.png" 
               alt="BK Tech" 
               className="relative h-32 md:h-40 w-auto hero-logo"
             />
