@@ -79,48 +79,48 @@ const Navigation = () => {
       </nav>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="fixed top-20 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-lg md:hidden">
-          <div className="px-4 py-6 space-y-4">
-            <button 
-              onClick={() => scrollToSection('home')} 
-              className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
-            >
-              {t.home}
-            </button>
-            <button 
-              onClick={() => scrollToSection('mission')} 
-              className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
-            >
-              {t.mission}
-            </button>
-            <button 
-              onClick={() => scrollToSection('expertise')} 
-              className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
-            >
-              {t.expertise}
-            </button>
-            <button 
-              onClick={() => scrollToSection('projects')} 
-              className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
-            >
-              {t.projects}
-            </button>
-            <button 
-              onClick={() => scrollToSection('team')} 
-              className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
-            >
-              {t.team}
-            </button>
-            <button 
-              onClick={() => scrollToSection('contact')} 
-              className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
-            >
-              {t.contact}
-            </button>
-          </div>
+      <div className={`fixed top-20 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-lg md:hidden transition-all duration-300 overflow-hidden ${
+        mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+      }`}>
+        <div className="px-4 py-6 space-y-4">
+          <button 
+            onClick={() => scrollToSection('home')} 
+            className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
+          >
+            {t.home}
+          </button>
+          <button 
+            onClick={() => scrollToSection('mission')} 
+            className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
+          >
+            {t.mission}
+          </button>
+          <button 
+            onClick={() => scrollToSection('expertise')} 
+            className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
+          >
+            {t.expertise}
+          </button>
+          <button 
+            onClick={() => scrollToSection('projects')} 
+            className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
+          >
+            {t.projects}
+          </button>
+          <button 
+            onClick={() => scrollToSection('team')} 
+            className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
+          >
+            {t.team}
+          </button>
+          <button 
+            onClick={() => scrollToSection('contact')} 
+            className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
+          >
+            {t.contact}
+          </button>
         </div>
-      )}
+      </div>
     </>
   );
 };
