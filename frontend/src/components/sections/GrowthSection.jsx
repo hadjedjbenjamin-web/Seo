@@ -75,62 +75,62 @@ const GrowthSection = () => {
         </div>
 
         {/* Detailed Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {/* Clients Evolution */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-            <div className="flex items-center mb-6">
-              <div className="p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg mr-4">
-                <Users className="w-6 h-6 text-blue-600" />
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
+            <div className="flex items-center mb-4 md:mb-6">
+              <div className="p-2 md:p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg mr-3 md:mr-4">
+                <Users className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900">
                 {language === 'fr' ? 'Clients' : 'Clients'}
               </h3>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2 md:space-y-3">
               {t.stats.map((stat, index) => (
                 <div key={index} className="flex justify-between items-center">
-                  <span className="text-gray-600">{stat.year}</span>
-                  <span className="font-bold text-blue-600">{stat.clients}</span>
+                  <span className="text-sm md:text-base text-gray-600">{stat.year}</span>
+                  <span className="text-sm md:text-base font-bold text-blue-600">{stat.clients}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Projects Evolution */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-            <div className="flex items-center mb-6">
-              <div className="p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg mr-4">
-                <Briefcase className="w-6 h-6 text-blue-600" />
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
+            <div className="flex items-center mb-4 md:mb-6">
+              <div className="p-2 md:p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg mr-3 md:mr-4">
+                <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900">
                 {language === 'fr' ? 'Projets' : 'Projects'}
               </h3>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2 md:space-y-3">
               {t.stats.map((stat, index) => (
                 <div key={index} className="flex justify-between items-center">
-                  <span className="text-gray-600">{stat.year}</span>
-                  <span className="font-bold text-blue-600">{stat.projects}</span>
+                  <span className="text-sm md:text-base text-gray-600">{stat.year}</span>
+                  <span className="text-sm md:text-base font-bold text-blue-600">{stat.projects}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Revenue Evolution */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-            <div className="flex items-center mb-6">
-              <div className="p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg mr-4">
-                <DollarSign className="w-6 h-6 text-blue-600" />
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
+            <div className="flex items-center mb-4 md:mb-6">
+              <div className="p-2 md:p-3 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg mr-3 md:mr-4">
+                <DollarSign className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900">
                 {language === 'fr' ? 'CA' : 'Revenue'}
               </h3>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2 md:space-y-3">
               {t.stats.map((stat, index) => (
                 <div key={index} className="flex justify-between items-center">
-                  <span className="text-gray-600">{stat.year}</span>
-                  <span className="font-bold text-blue-600">{stat.revenue}</span>
+                  <span className="text-sm md:text-base text-gray-600">{stat.year}</span>
+                  <span className="text-sm md:text-base font-bold text-blue-600">{stat.revenue}</span>
                 </div>
               ))}
             </div>
