@@ -24,10 +24,20 @@ const ProjectsSection = () => {
               key={index}
               className="group bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-200 hover:border-blue-300"
             >
-              {/* Placeholder Image */}
-              <div className="bg-gradient-to-br from-blue-100 to-cyan-100 h-48 rounded-xl mb-6 flex items-center justify-center">
-                <div className="text-6xl font-bold text-white/50">{index + 1}</div>
-              </div>
+              {/* Project Image */}
+              {index === 0 ? (
+                <div className="h-48 rounded-xl mb-6 overflow-hidden">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png" 
+                    alt="Plateforme de Trading BK Tech" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="bg-gradient-to-br from-blue-100 to-cyan-100 h-48 rounded-xl mb-6 flex items-center justify-center">
+                  <div className="text-6xl font-bold text-white/50">{index + 1}</div>
+                </div>
+              )}
               
               <h3 className="text-2xl font-bold text-gray-900 mb-3">{project.title}</h3>
               <p className="text-gray-600 leading-relaxed">{project.description}</p>
