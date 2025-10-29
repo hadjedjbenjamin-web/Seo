@@ -52,10 +52,10 @@ const ProjectsSection = () => {
               ) : index === 1 ? (
                 <div 
                   className="rounded-xl mb-6 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300"
-                  onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/b78eklny_crypto%20sans%20fond%20d%27ecran.png')}
+                  onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/piq1wh9l_crypto%20sans%20fond%20d%27ecran.png')}
                 >
                   <img 
-                    src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/b78eklny_crypto%20sans%20fond%20d%27ecran.png" 
+                    src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/piq1wh9l_crypto%20sans%20fond%20d%27ecran.png" 
                     alt="Solution Crypto BK Tech" 
                     className="w-full h-auto object-contain"
                   />
