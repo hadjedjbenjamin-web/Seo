@@ -72,10 +72,15 @@ const ProjectsSection = () => {
                   />
                 </div>
               ) : (
-                <div className="rounded-xl mb-6 overflow-hidden bg-white border-2 border-gray-200 p-8 h-48 md:h-56 lg:h-64 flex items-center justify-center">
-                  <p className="text-gray-400 text-center font-medium">
-                    {language === 'fr' ? 'Projet sur mesure' : 'Custom Project'}
-                  </p>
+                <div 
+                  className="rounded-xl mb-6 overflow-hidden bg-white p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300 border-2 border-blue-500 shadow-lg shadow-blue-200/50"
+                  onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/x40fam30_immobilier%20sans%20fond%20d%20ecran.png')}
+                >
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/x40fam30_immobilier%20sans%20fond%20d%20ecran.png" 
+                    alt="Projet Immobilier BK Tech" 
+                    className="w-full h-auto object-contain"
+                  />
                 </div>
               )}
               
