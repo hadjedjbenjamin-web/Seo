@@ -168,6 +168,21 @@ export const translations = {
           name: 'Sophie Bernard',
           company: 'Digital Learning',
           text: 'Résultat au-delà de nos attentes. Une solution sur-mesure qui correspond exactement à nos besoins.'
+        },
+        {
+          name: 'Alexandre Rousseau',
+          company: 'CryptoVision',
+          text: 'Développement crypto impeccable. BK Tech a su gérer la complexité technique avec brio.'
+        },
+        {
+          name: 'Camille Petit',
+          company: 'Analytics Pro',
+          text: 'Dashboard performant et intuitif. L\'équipe BK Tech est ultra-compétente et à l\'écoute.'
+        },
+        {
+          name: 'Laurent Dubois',
+          company: 'PropTech Solutions',
+          text: 'Application immobilière moderne et fluide. Excellent travail de A à Z.'
         }
       ]
     },
