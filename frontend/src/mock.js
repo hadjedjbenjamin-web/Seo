@@ -215,8 +215,8 @@ export const translations = {
           description: 'Data visualization and business intelligence'
         },
         {
-          title: 'E-Learning Platform',
-          description: 'Complete online training solution'
+          title: 'Custom Projects',
+          description: 'Personalized solutions tailored to your needs'
         }
       ]
     },
