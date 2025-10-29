@@ -108,6 +108,12 @@ const Navigation = () => {
             {t.projects}
           </button>
           <button 
+            onClick={() => scrollToSection('growth')} 
+            className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
+          >
+            {t.growth}
+          </button>
+          <button 
             onClick={() => scrollToSection('team')} 
             className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-300 font-medium"
           >
