@@ -92,6 +92,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Scroll offset for sticky navigation */
+section[id] {
+  scroll-margin-top: 100px;
+}
+
 /* Mobile Menu Animation */
 @keyframes slideDown {
   from {
