@@ -41,10 +41,10 @@ const ProjectsSection = () => {
               {index === 0 ? (
                 <div 
                   className="rounded-xl mb-6 overflow-hidden bg-white p-4 cursor-pointer hover:opacity-90 transition-opacity duration-300 border-2 border-blue-500 shadow-lg shadow-blue-200/50"
-                  onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png')}
+                  onClick={() => openImage('https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/j1zbry5z_visuel_trading_BK_tech-removebg.png')}
                 >
                   <img 
-                    src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png" 
+                    src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/j1zbry5z_visuel_trading_BK_tech-removebg.png" 
                     alt="Plateforme de Trading BK Tech" 
                     className="w-full h-auto object-contain"
                   />
