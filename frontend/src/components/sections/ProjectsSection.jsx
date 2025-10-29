@@ -72,8 +72,10 @@ const ProjectsSection = () => {
                   />
                 </div>
               ) : (
-                <div className="bg-gradient-to-br from-blue-100 to-cyan-100 h-48 md:h-56 lg:h-64 rounded-xl mb-6 flex items-center justify-center">
-                  <div className="text-6xl font-bold text-white/50">{index + 1}</div>
+                <div className="rounded-xl mb-6 overflow-hidden bg-white border-2 border-gray-200 p-8 h-48 md:h-56 lg:h-64 flex items-center justify-center">
+                  <p className="text-gray-400 text-center font-medium">
+                    {language === 'fr' ? 'Projet sur mesure' : 'Custom Project'}
+                  </p>
                 </div>
               )}
               
