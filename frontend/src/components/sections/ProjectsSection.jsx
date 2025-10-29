@@ -7,7 +7,7 @@ const ProjectsSection = () => {
   const t = translations[language].projects;
 
   return (
-    <section id="projects" className="py-24 bg-white relative overflow-hidden">
+    <section id="projects" className="py-16 bg-white relative overflow-hidden">
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
