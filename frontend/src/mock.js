@@ -377,6 +377,21 @@ export const translations = {
           name: 'Sophie Bernard',
           company: 'Digital Learning',
           text: 'Results beyond our expectations. A custom solution that exactly matches our needs.'
+        },
+        {
+          name: 'Alexandre Rousseau',
+          company: 'CryptoVision',
+          text: 'Flawless crypto development. BK Tech managed the technical complexity brilliantly.'
+        },
+        {
+          name: 'Camille Petit',
+          company: 'Analytics Pro',
+          text: 'Powerful and intuitive dashboard. The BK Tech team is highly skilled and attentive.'
+        },
+        {
+          name: 'Laurent Dubois',
+          company: 'PropTech Solutions',
+          text: 'Modern and smooth real estate application. Excellent work from A to Z.'
         }
       ]
     },
