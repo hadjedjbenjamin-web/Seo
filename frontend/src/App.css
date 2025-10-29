@@ -1,34 +1,93 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Logo Glow Effect */
+.logo-glow {
+  filter: drop-shadow(0 0 20px rgba(0, 102, 255, 0.4));
+  transition: filter 0.3s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.logo-glow:hover {
+  filter: drop-shadow(0 0 30px rgba(0, 170, 255, 0.6));
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Hero Logo Animation */
+.hero-logo {
+  animation: float 3s ease-in-out infinite;
 }
 
-.App-link {
-    color: #61dafb;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Hero Title Animation */
+.hero-title {
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navigation Link Styling */
+.nav-link {
+  position: relative;
+  color: #4B5563;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0066FF;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #0066FF, #00AAFF);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Tech Wave Background Pattern */
+.tech-wave-bg {
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 35px,
+      rgba(0, 102, 255, 0.03) 35px,
+      rgba(0, 102, 255, 0.03) 70px
+    );
+  animation: wave-move 20s linear infinite;
+}
+
+@keyframes wave-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1000px 1000px;
+  }
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
 }
