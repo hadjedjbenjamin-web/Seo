@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Logo Small */}
           <div className="flex items-center">
             <img 
-              src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/3ks6etk8_ChatGPT%20Image%2029%20oct.%202025%2C%2008_32_21.png" 
+              src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/jbuevisw_ChatGPT_Image_29_oct._2025__08_32_21-removebg-preview.png" 
               alt="BK Tech" 
               className="h-8 w-auto opacity-80"
             />
