@@ -20,10 +20,10 @@ const MissionSection = () => {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900">
           {t.title}
         </h2>
-        <p className="text-xl text-gray-700 leading-relaxed">
+        <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
           {t.description}
         </p>
       </div>
