@@ -79,9 +79,8 @@ const Navigation = () => {
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`fixed top-20 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-lg md:hidden transition-all duration-300 overflow-hidden ${
-        mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-      }`}>
+      {mobileMenuOpen && (
+        <div className="fixed top-20 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-lg md:hidden animate-slideDown">
         <div className="px-4 py-6 space-y-4">
           <button 
             onClick={() => scrollToSection('home')} 
