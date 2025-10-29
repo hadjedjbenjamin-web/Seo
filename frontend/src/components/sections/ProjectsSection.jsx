@@ -26,15 +26,15 @@ const ProjectsSection = () => {
             >
               {/* Project Image */}
               {index === 0 ? (
-                <div className="h-48 rounded-xl mb-6 overflow-hidden">
+                <div className="h-48 md:h-64 rounded-xl mb-6 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_smart-tech-1/artifacts/hgvvagft_visuel%20trading%20BK%20tech.png" 
                     alt="Plateforme de Trading BK Tech" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               ) : (
-                <div className="bg-gradient-to-br from-blue-100 to-cyan-100 h-48 rounded-xl mb-6 flex items-center justify-center">
+                <div className="bg-gradient-to-br from-blue-100 to-cyan-100 h-48 md:h-64 rounded-xl mb-6 flex items-center justify-center">
                   <div className="text-6xl font-bold text-white/50">{index + 1}</div>
                 </div>
               )}
