@@ -15,7 +15,7 @@ const WhySection = () => {
   const t = translations[language].why;
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl"></div>
       
