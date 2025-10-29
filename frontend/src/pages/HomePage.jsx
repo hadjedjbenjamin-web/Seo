@@ -6,6 +6,7 @@ import WhySection from '../components/sections/WhySection';
 import MissionSection from '../components/sections/MissionSection';
 import ExpertiseSection from '../components/sections/ExpertiseSection';
 import ProjectsSection from '../components/sections/ProjectsSection';
+import GrowthSection from '../components/sections/GrowthSection';
 import TeamSection from '../components/sections/TeamSection';
 import TestimonialsSection from '../components/sections/TestimonialsSection';
 import ContactSection from '../components/sections/ContactSection';
@@ -19,6 +20,7 @@ const HomePage = () => {
       <ProjectsSection />
       <MissionSection />
       <ExpertiseSection />
+      <GrowthSection />
       <TeamSection />
       <TestimonialsSection />
       <ContactSection />
