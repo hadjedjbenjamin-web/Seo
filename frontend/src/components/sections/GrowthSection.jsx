@@ -45,8 +45,9 @@ const GrowthSection = () => {
           {/* Simple Bar Chart */}
           <div className="flex items-end justify-between h-96 gap-4 px-4">
             {t.stats.map((stat, index) => {
-              const maxRevenue = 850;
-              const revenueValue = parseInt(stat.revenue);
+              const maxRevenue = 42;
+              // Extract numeric value (2.8M€ -> 2.8)
+              const revenueValue = parseFloat(stat.revenue);
               const heightPercent = (revenueValue / maxRevenue) * 100;
               
               return (
