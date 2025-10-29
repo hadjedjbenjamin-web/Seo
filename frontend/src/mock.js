@@ -282,31 +282,31 @@ export const translations = {
       stats: [
         {
           year: '2021',
-          revenue: '2.8M€',
+          revenue: '1.4M€',
           clients: 5,
           projects: 8
         },
         {
           year: '2022',
-          revenue: '8.7M€',
+          revenue: '4.4M€',
           clients: 15,
           projects: 25
         },
         {
           year: '2023',
-          revenue: '17.5M€',
+          revenue: '8.8M€',
           clients: 35,
           projects: 50
         },
         {
           year: '2024',
-          revenue: '30M€',
+          revenue: '15M€',
           clients: 60,
           projects: 85
         },
         {
           year: '2025',
-          revenue: '42M€',
+          revenue: '21M€',
           clients: 85,
           projects: 120
         }
@@ -321,7 +321,7 @@ export const translations = {
           label: 'Satisfied clients'
         },
         {
-          number: '42M€',
+          number: '21M€',
           label: '2025 Revenue'
         },
         {
