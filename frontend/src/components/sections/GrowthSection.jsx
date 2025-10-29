@@ -22,16 +22,16 @@ const GrowthSection = () => {
         </div>
 
         {/* Key Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
           {t.highlights.map((highlight, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-2xl text-center transform hover:-translate-y-2 transition-all duration-300 border border-blue-100"
+              className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 md:p-8 rounded-xl md:rounded-2xl text-center transform hover:-translate-y-2 transition-all duration-300 border border-blue-100"
             >
-              <div className="text-4xl md:text-5xl font-bold text-blue-600 mb-2">
+              <div className="text-2xl md:text-4xl lg:text-5xl font-bold text-blue-600 mb-1 md:mb-2">
                 {highlight.number}
               </div>
-              <div className="text-gray-700 font-medium">{highlight.label}</div>
+              <div className="text-gray-700 font-medium text-xs md:text-base">{highlight.label}</div>
             </div>
           ))}
         </div>
