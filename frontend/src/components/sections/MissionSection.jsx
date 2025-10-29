@@ -7,7 +7,7 @@ const MissionSection = () => {
   const t = translations[language].mission;
 
   return (
-    <section id="mission" className="py-24 bg-white relative overflow-hidden">
+    <section id="mission" className="py-16 bg-white relative overflow-hidden">
       {/* Blue Wave Effect */}
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" viewBox="0 0 1440 320">
