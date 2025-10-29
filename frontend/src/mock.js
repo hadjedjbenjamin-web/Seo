@@ -82,6 +82,60 @@ export const translations = {
         }
       ]
     },
+    growth: {
+      title: 'Notre Croissance depuis 2021',
+      subtitle: 'Une évolution constante portée par l\'innovation',
+      stats: [
+        {
+          year: '2021',
+          revenue: '50K€',
+          clients: 5,
+          projects: 8
+        },
+        {
+          year: '2022',
+          revenue: '150K€',
+          clients: 15,
+          projects: 25
+        },
+        {
+          year: '2023',
+          revenue: '350K€',
+          clients: 35,
+          projects: 50
+        },
+        {
+          year: '2024',
+          revenue: '600K€',
+          clients: 60,
+          projects: 85
+        },
+        {
+          year: '2025',
+          revenue: '850K€',
+          clients: 85,
+          projects: 120
+        }
+      ],
+      highlights: [
+        {
+          number: '150+',
+          label: 'Projets réalisés'
+        },
+        {
+          number: '85+',
+          label: 'Clients satisfaits'
+        },
+        {
+          number: '850K€',
+          label: 'Chiffre d\'affaires 2025'
+        },
+        {
+          number: '1600%',
+          label: 'Croissance depuis 2021'
+        }
+      ]
+    },
     team: {
       title: 'L\'Équipe Dirigeante',
       members: [
