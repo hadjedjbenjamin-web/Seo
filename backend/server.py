@@ -78,6 +78,81 @@ async def get_status_checks():
     
     return status_checks
 
+@api_router.post("/contact", response_model=ContactFormResponse)
+async def submit_contact_form(form_data: ContactFormRequest):
+    """Send contact form email via Mailgun"""
+    try:
+        mailgun_api_key = os.environ.get('MAILGUN_API_KEY')
+        mailgun_domain = os.environ.get('MAILGUN_DOMAIN')
+        mailgun_sender = os.environ.get('MAILGUN_SENDER_EMAIL')
+        mailgun_recipient = os.environ.get('MAILGUN_RECIPIENT_EMAIL')
+        
+        if not all([mailgun_api_key, mailgun_domain, mailgun_sender, mailgun_recipient]):
+            logging.error("Mailgun configuration incomplete")
+            return ContactFormResponse(
+                success=False,
+                message="Configuration d'email incomplète"
+            )
+        
+        # Format email body
+        email_body = f"""Nouveau message de contact BK Tech
+
+Nom: {form_data.name}
+Email: {form_data.email}
+Téléphone: {form_data.phone}
+
+Message:
+{form_data.message}
+"""
+        
+        # Send email via Mailgun
+        response = requests.post(
+            f"https://api.mailgun.net/v3/{mailgun_domain}/messages",
+            auth=("api", mailgun_api_key),
+            data={
+                "from": f"BK Tech Contact Form <{mailgun_sender}>",
+                "to": mailgun_recipient,
+                "subject": f"Nouveau contact: {form_data.name}",
+                "text": email_body
+            },
+            timeout=10
+        )
+        
+        response.raise_for_status()
+        result = response.json()
+        
+        # Save to database
+        contact_record = {
+            "name": form_data.name,
+            "email": form_data.email,
+            "phone": form_data.phone,
+            "message": form_data.message,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "mailgun_id": result.get("id", "")
+        }
+        await db.contacts.insert_one(contact_record)
+        
+        logging.info(f"Contact form email sent: {result.get('id')}")
+        
+        return ContactFormResponse(
+            success=True,
+            message="Votre message a été envoyé avec succès !",
+            message_id=result.get("id")
+        )
+        
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Mailgun API error: {str(e)}")
+        return ContactFormResponse(
+            success=False,
+            message="Erreur lors de l'envoi du message. Veuillez réessayer."
+        )
+    except Exception as e:
+        logging.error(f"Unexpected error: {str(e)}")
+        return ContactFormResponse(
+            success=False,
+            message="Une erreur inattendue s'est produite."
+        )
+
 # Include the router in the main app
 app.include_router(api_router)
 
