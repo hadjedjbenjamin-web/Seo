@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { translations } from '../../mock';
 import { Mail, Phone, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const ContactSection = () => {
   const { language } = useLanguage();
@@ -14,13 +17,38 @@ const ContactSection = () => {
     message: ''
   });
   
+  const [countryCode, setCountryCode] = useState('+33');
   const [status, setStatus] = useState({ type: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Get country code based on IP
+  useEffect(() => {
+    const fetchCountryCode = async () => {
+      try {
+        const response = await axios.get('https://ipapi.co/json/');
+        const code = response.data.country_calling_code || '+33';
+        setCountryCode(code);
+        setFormData(prev => ({ ...prev, phone: code }));
+      } catch (error) {
+        console.error('Error fetching country code:', error);
+        setFormData(prev => ({ ...prev, phone: '+33' }));
+      }
+    };
+    fetchCountryCode();
+  }, []);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    
+    // Pour le téléphone, garder l'indicatif au début
+    if (name === 'phone') {
+      if (!value.startsWith(countryCode)) {
+        setFormData({ ...formData, [name]: countryCode });
+        return;
+      }
+    }
+    
+    setFormData({ ...formData, [name]: value });
   };
 
   const validateForm = () => {
@@ -28,21 +56,73 @@ const ContactSection = () => {
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(formData.email);
+    if (!emailRegex.test(formData.email)) {
+      return false;
+    }
+    if (formData.message.length < 10) {
+      return false;
+    }
+    return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (validateForm()) {
-      setStatus({ type: 'success', message: t.form.success });
-      // Reset form
-      setFormData({ name: '', email: '', phone: '', message: '' });
+    if (!validateForm()) {
+      setStatus({ 
+        type: 'error', 
+        message: language === 'fr' 
+          ? 'Veuillez remplir tous les champs correctement' 
+          : 'Please fill all fields correctly'
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/contact`, formData);
       
+      if (response.data.success) {
+        setStatus({ 
+          type: 'success', 
+          message: response.data.message || (language === 'fr' 
+            ? 'Votre message a été envoyé avec succès !' 
+            : 'Your message has been sent successfully!')
+        });
+        
+        // Reset form
+        setFormData({ 
+          name: '', 
+          email: '', 
+          phone: countryCode, 
+          message: '' 
+        });
+      } else {
+        setStatus({ 
+          type: 'error', 
+          message: response.data.message || (language === 'fr'
+            ? 'Erreur lors de l\'envoi du message' 
+            : 'Error sending message')
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus({ 
+        type: 'error', 
+        message: language === 'fr'
+          ? 'Erreur lors de l\'envoi du message. Veuillez réessayer.'
+          : 'Error sending message. Please try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
       // Clear success message after 5 seconds
-      setTimeout(() => setStatus({ type: '', message: '' }), 5000);
-    } else {
-      setStatus({ type: 'error', message: t.form.error });
+      setTimeout(() => {
+        if (status.type === 'success') {
+          setStatus({ type: '', message: '' });
+        }
+      }, 5000);
     }
   };
 
@@ -64,7 +144,7 @@ const ContactSection = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                  {t.form.name}
+                  {t.form.name} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -79,7 +159,7 @@ const ContactSection = () => {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                  {t.form.email}
+                  {t.form.email} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -94,7 +174,7 @@ const ContactSection = () => {
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
-                  {t.form.phone}
+                  {t.form.phone} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -102,6 +182,7 @@ const ContactSection = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  placeholder={`${countryCode} 6 12 34 56 78`}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
                   required
                 />
@@ -109,7 +190,7 @@ const ContactSection = () => {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                  {t.form.message}
+                  {t.form.message} <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -119,15 +200,19 @@ const ContactSection = () => {
                   rows="5"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300 resize-none"
                   required
+                  minLength="10"
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-xl hover:shadow-blue-500/50 transform hover:-translate-y-1 transition-all duration-300"
+                disabled={isSubmitting}
+                className={`w-full flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-xl hover:shadow-blue-500/50 transform hover:-translate-y-1 transition-all duration-300 ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               >
-                <span>{t.form.submit}</span>
-                <Send className="w-5 h-5" />
+                <span>{isSubmitting ? (language === 'fr' ? 'Envoi...' : 'Sending...') : t.form.submit}</span>
+                {!isSubmitting && <Send className="w-5 h-5" />}
               </button>
 
               {/* Status Message */}
