@@ -6,6 +6,29 @@ import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+// Liste des indicatifs pays les plus courants
+const countryCodes = [
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+1', country: 'USA/Canada', flag: '🇺🇸' },
+  { code: '+44', country: 'UK', flag: '🇬🇧' },
+  { code: '+49', country: 'Allemagne', flag: '🇩🇪' },
+  { code: '+34', country: 'Espagne', flag: '🇪🇸' },
+  { code: '+39', country: 'Italie', flag: '🇮🇹' },
+  { code: '+32', country: 'Belgique', flag: '🇧🇪' },
+  { code: '+41', country: 'Suisse', flag: '🇨🇭' },
+  { code: '+351', country: 'Portugal', flag: '🇵🇹' },
+  { code: '+31', country: 'Pays-Bas', flag: '🇳🇱' },
+  { code: '+212', country: 'Maroc', flag: '🇲🇦' },
+  { code: '+213', country: 'Algérie', flag: '🇩🇿' },
+  { code: '+216', country: 'Tunisie', flag: '🇹🇳' },
+  { code: '+237', country: 'Cameroun', flag: '🇨🇲' },
+  { code: '+225', country: 'Côte d\'Ivoire', flag: '🇨🇮' },
+  { code: '+221', country: 'Sénégal', flag: '🇸🇳' },
+  { code: '+86', country: 'Chine', flag: '🇨🇳' },
+  { code: '+91', country: 'Inde', flag: '🇮🇳' },
+  { code: '+81', country: 'Japon', flag: '🇯🇵' },
+];
+
 const ContactSection = () => {
   const { language } = useLanguage();
   const t = translations[language].contact;
@@ -13,7 +36,7 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     message: ''
   });
   
@@ -28,10 +51,9 @@ const ContactSection = () => {
         const response = await axios.get('https://ipapi.co/json/');
         const code = response.data.country_calling_code || '+33';
         setCountryCode(code);
-        setFormData(prev => ({ ...prev, phone: code }));
       } catch (error) {
         console.error('Error fetching country code:', error);
-        setFormData(prev => ({ ...prev, phone: '+33' }));
+        setCountryCode('+33');
       }
     };
     fetchCountryCode();
