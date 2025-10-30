@@ -101,3 +101,49 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Intégrer Mailgun au formulaire de contact avec champs obligatoires (astérisques rouges), menu déroulant pour l'indicatif pays avec détection automatique par IP, et possibilité de modifier l'indicatif."
+
+backend:
+  - task: "API endpoint /api/contact avec Mailgun"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Endpoint /api/contact créé avec intégration Mailgun pour envoyer des emails à contact@bkteck.dev. Configuration avec MAILGUN_API_KEY et MAILGUN_DOMAIN dans .env"
+
+frontend:
+  - task: "Formulaire de contact avec menu déroulant indicatif pays"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/sections/ContactSection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implémentation du formulaire avec: 1) Astérisques rouges sur champs obligatoires 2) Menu déroulant avec 19 pays pour l'indicatif téléphonique 3) Détection automatique de l'indicatif par IP (ipapi.co) 4) Possibilité de changer l'indicatif manuellement 5) Validation côté client 6) Messages de succès/erreur 7) Connexion à l'API backend /api/contact"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "API endpoint /api/contact avec Mailgun"
+    - "Formulaire de contact avec menu déroulant indicatif pays"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "main"
+      message: "Implémentation du formulaire de contact terminée. Menu déroulant pour l'indicatif pays ajouté avec détection automatique par IP. Le formulaire envoie les données à l'API backend /api/contact qui utilise Mailgun. Tests backend et frontend nécessaires pour vérifier: 1) L'envoi d'email via Mailgun 2) La validation des champs 3) La détection automatique de l'indicatif pays 4) Le changement manuel de l'indicatif"
