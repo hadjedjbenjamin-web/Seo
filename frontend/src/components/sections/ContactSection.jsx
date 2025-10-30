@@ -104,7 +104,14 @@ const ContactSection = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/contact`, formData);
+      // Combiner l'indicatif pays avec le numéro de téléphone
+      const fullPhone = `${countryCode} ${formData.phoneNumber}`;
+      const dataToSend = {
+        ...formData,
+        phone: fullPhone
+      };
+      
+      const response = await axios.post(`${BACKEND_URL}/api/contact`, dataToSend);
       
       if (response.data.success) {
         setStatus({ 
@@ -118,7 +125,7 @@ const ContactSection = () => {
         setFormData({ 
           name: '', 
           email: '', 
-          phone: countryCode, 
+          phoneNumber: '', 
           message: '' 
         });
       } else {
