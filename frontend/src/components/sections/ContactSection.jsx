@@ -69,7 +69,7 @@ const ContactSection = () => {
   };
 
   const validateForm = () => {
-    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+    if (!formData.name || !formData.email || !formData.phoneNumber || !formData.message) {
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -77,6 +77,11 @@ const ContactSection = () => {
       return false;
     }
     if (formData.message.length < 10) {
+      return false;
+    }
+    // Vérifier que le numéro de téléphone contient au moins 6 chiffres
+    const phoneDigits = formData.phoneNumber.replace(/\D/g, '');
+    if (phoneDigits.length < 6) {
       return false;
     }
     return true;
