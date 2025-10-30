@@ -205,16 +205,33 @@ const ContactSection = () => {
                 <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
                   {t.form.phone} <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder={`${countryCode} 6 12 34 56 78`}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
-                  required
-                />
+                <div className="flex space-x-2">
+                  {/* Menu déroulant pour l'indicatif pays */}
+                  <select
+                    value={countryCode}
+                    onChange={handleCountryCodeChange}
+                    className="px-3 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300 bg-white"
+                    style={{ minWidth: '120px' }}
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.flag} {country.code}
+                      </option>
+                    ))}
+                  </select>
+                  
+                  {/* Champ pour le numéro de téléphone */}
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    placeholder={language === 'fr' ? '6 12 34 56 78' : '123 456 7890'}
+                    className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
+                    required
+                  />
+                </div>
               </div>
 
               <div>
