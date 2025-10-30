@@ -107,15 +107,18 @@ user_problem_statement: "Intégrer Mailgun au formulaire de contact avec champs 
 backend:
   - task: "API endpoint /api/contact avec Mailgun"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Endpoint /api/contact créé avec intégration Mailgun pour envoyer des emails à contact@bkteck.dev. Configuration avec MAILGUN_API_KEY et MAILGUN_DOMAIN dans .env"
+        - working: false
+          agent: "testing"
+          comment: "CRITICAL: Mailgun account is DISABLED. API returns 403 Forbidden with message 'Domain sandboxb07887caf3d144f8aa8c6380cfc0ee54.mailgun.org is not allowed to send: Account disabled'. Backend API validation works correctly (422 errors for invalid data), but email sending fails due to disabled Mailgun account. This is a third-party service issue, not a code problem."
 
 frontend:
   - task: "Formulaire de contact avec menu déroulant indicatif pays"
