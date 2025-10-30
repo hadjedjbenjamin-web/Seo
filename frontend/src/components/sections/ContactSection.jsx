@@ -61,16 +61,11 @@ const ContactSection = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    // Pour le téléphone, garder l'indicatif au début
-    if (name === 'phone') {
-      if (!value.startsWith(countryCode)) {
-        setFormData({ ...formData, [name]: countryCode });
-        return;
-      }
-    }
-    
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCountryCodeChange = (e) => {
+    setCountryCode(e.target.value);
   };
 
   const validateForm = () => {
