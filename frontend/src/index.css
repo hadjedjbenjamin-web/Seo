@@ -12,6 +12,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Cacher le badge Emergent */
+#emergent-badge {
+    display: none !important;
+}
+
 code {
     font-family:
         source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
