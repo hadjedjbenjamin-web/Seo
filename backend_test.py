@@ -22,10 +22,10 @@ def test_contact_form_valid_submission():
     
     # Test data as suggested in the review request
     test_data = {
-        "name": "Jean Dupont",
-        "email": "jean.dupont@example.com", 
+        "name": "Test User BK Tech",
+        "email": "test@example.com",
         "phone": "+33 6 12 34 56 78",
-        "message": "Bonjour, ceci est un message de test pour vérifier l'intégration Mailgun avec le formulaire de contact BK Tech."
+        "message": "Ceci est un message de test pour vérifier l'intégration SMTP ZeptoMail avec le formulaire de contact BK Tech."
     }
     
     try:
