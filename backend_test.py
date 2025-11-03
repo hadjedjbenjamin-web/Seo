@@ -45,7 +45,7 @@ def test_contact_form_valid_submission():
                 print("✅ Valid submission test PASSED")
                 print(f"   Message: {data.get('message')}")
                 if data.get('message_id'):
-                    print(f"   Mailgun Message ID: {data.get('message_id')}")
+                    print(f"   Message ID: {data.get('message_id')}")
                 return True
             else:
                 print("❌ Valid submission test FAILED - success=False")
