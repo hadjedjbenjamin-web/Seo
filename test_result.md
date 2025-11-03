@@ -105,11 +105,11 @@
 user_problem_statement: "Intégrer Mailgun au formulaire de contact avec champs obligatoires (astérisques rouges), menu déroulant pour l'indicatif pays avec détection automatique par IP, et possibilité de modifier l'indicatif."
 
 backend:
-  - task: "API endpoint /api/contact avec Mailgun"
+  - task: "API endpoint /api/contact avec ZeptoMail SMTP"
     implemented: true
-    working: false
+    working: true
     file: "/app/backend/server.py"
-    stuck_count: 1
+    stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
@@ -119,6 +119,9 @@ backend:
         - working: false
           agent: "testing"
           comment: "CRITICAL: Mailgun account is DISABLED. API returns 403 Forbidden with message 'Domain sandboxb07887caf3d144f8aa8c6380cfc0ee54.mailgun.org is not allowed to send: Account disabled'. Backend API validation works correctly (422 errors for invalid data), but email sending fails due to disabled Mailgun account. This is a third-party service issue, not a code problem."
+        - working: true
+          agent: "testing"
+          comment: "✅ ZeptoMail SMTP integration SUCCESSFUL! All tests passed (5/5): 1) API connectivity working 2) Valid contact form submission sends email successfully via SMTP to contact@bktech.dev 3) Proper validation for missing fields (422 error) 4) Invalid email format validation (422 error) 5) Short message validation (422 error). Email confirmed sent in backend logs and contact data saved to MongoDB database. Backend API fully functional with ZeptoMail SMTP configuration."
 
 frontend:
   - task: "Formulaire de contact avec menu déroulant indicatif pays"
