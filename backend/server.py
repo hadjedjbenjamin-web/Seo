@@ -98,14 +98,21 @@ async def submit_contact_form(form_data: ContactFormRequest):
                 message="Configuration d'email incomplète"
             )
         
-        # Create email message
-        msg = MIMEMultipart()
-        msg['From'] = f"BK Tech Contact <{smtp_sender_email}>"
-        msg['To'] = smtp_recipient_email
-        msg['Subject'] = f"Nouveau contact: {form_data.name}"
+        # Extraire le prénom (premier mot du nom)
+        first_name = form_data.name.split()[0] if form_data.name else "Client"
         
-        # Format email body
-        email_body = f"""Nouveau message de contact BK Tech
+        # Connexion SMTP (réutilisée pour les deux emails)
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(smtp_username, smtp_password)
+            
+            # 1. Email de notification à BK Tech (contact@bktech.dev)
+            msg_notification = MIMEMultipart()
+            msg_notification['From'] = f"BK Tech Contact <{smtp_sender_email}>"
+            msg_notification['To'] = smtp_recipient_email
+            msg_notification['Subject'] = f"Nouveau contact: {form_data.name}"
+            
+            notification_body = f"""Nouveau message de contact BK Tech
 
 Nom: {form_data.name}
 Email: {form_data.email}
@@ -117,14 +124,31 @@ Message:
 ---
 Ce message a été envoyé via le formulaire de contact de bktech.dev
 """
-        
-        msg.attach(MIMEText(email_body, 'plain'))
-        
-        # Send email via SMTP
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(smtp_username, smtp_password)
-            server.send_message(msg)
+            
+            msg_notification.attach(MIMEText(notification_body, 'plain'))
+            server.send_message(msg_notification)
+            logging.info(f"Notification email sent to {smtp_recipient_email}")
+            
+            # 2. Email de confirmation au client
+            msg_confirmation = MIMEMultipart()
+            msg_confirmation['From'] = f"BK Tech <{smtp_sender_email}>"
+            msg_confirmation['To'] = form_data.email
+            msg_confirmation['Subject'] = "Merci pour votre message - BK Tech"
+            
+            confirmation_body = f"""Bonjour {first_name},
+
+Merci d'avoir complété notre formulaire d'information et bienvenue chez BK Tech !
+Notre équipe vous contactera très bientôt pour découvrir ensemble comment nous pouvons donner vie à vos projets digitaux.
+
+À très vite,
+L'équipe BK Tech
+💻 Création d'applications sur mesure, puissantes et innovantes
+📧 contact@bktech.dev | 🌐 www.bktech.dev
+"""
+            
+            msg_confirmation.attach(MIMEText(confirmation_body, 'plain'))
+            server.send_message(msg_confirmation)
+            logging.info(f"Confirmation email sent to {form_data.email}")
         
         # Save to database
         contact_record = {
@@ -133,11 +157,12 @@ Ce message a été envoyé via le formulaire de contact de bktech.dev
             "phone": form_data.phone,
             "message": form_data.message,
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "sent_via": "smtp"
+            "sent_via": "smtp",
+            "confirmation_sent": True
         }
         await db.contacts.insert_one(contact_record)
         
-        logging.info(f"Contact form email sent via SMTP to {smtp_recipient_email}")
+        logging.info(f"Contact form processed successfully for {form_data.name}")
         
         return ContactFormResponse(
             success=True,
