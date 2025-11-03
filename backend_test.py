@@ -180,7 +180,7 @@ def test_api_connectivity():
 def main():
     """Run all backend tests"""
     print("=" * 60)
-    print("🚀 BACKEND API TESTING - CONTACT FORM WITH MAILGUN")
+    print("🚀 BACKEND API TESTING - CONTACT FORM WITH ZEPTOMAIL SMTP")
     print("=" * 60)
     print(f"Backend URL: {BACKEND_URL}")
     print(f"API Base URL: {API_BASE_URL}")
