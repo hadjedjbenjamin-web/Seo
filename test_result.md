@@ -144,7 +144,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "API endpoint /api/contact avec Mailgun"
     - "Formulaire de contact avec menu déroulant indicatif pays"
   stuck_tasks: []
   test_all: true
