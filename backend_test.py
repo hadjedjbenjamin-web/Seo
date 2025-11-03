@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Backend API Testing for Contact Form with Mailgun Integration
+Backend API Testing for Contact Form with ZeptoMail SMTP Integration
 Tests the /api/contact endpoint functionality
 """
 
