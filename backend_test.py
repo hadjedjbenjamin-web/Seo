@@ -17,15 +17,15 @@ BACKEND_URL = os.environ.get('REACT_APP_BACKEND_URL', 'http://localhost:8001')
 API_BASE_URL = f"{BACKEND_URL}/api"
 
 def test_contact_form_valid_submission():
-    """Test valid contact form submission"""
-    print("🧪 Testing valid contact form submission...")
+    """Test valid contact form submission with dual email functionality"""
+    print("🧪 Testing valid contact form submission with auto-response email...")
     
-    # Test data as suggested in the review request
+    # Test data exactly as specified in the review request
     test_data = {
-        "name": "Test User BK Tech",
-        "email": "test@example.com",
+        "name": "Jean Dupont",
+        "email": "jean.dupont@example.com",
         "phone": "+33 6 12 34 56 78",
-        "message": "Ceci est un message de test pour vérifier l'intégration SMTP ZeptoMail avec le formulaire de contact BK Tech."
+        "message": "Test de l'auto-réponse email. Je souhaite obtenir plus d'informations sur vos services."
     }
     
     try:
