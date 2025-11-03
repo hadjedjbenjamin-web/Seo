@@ -82,19 +82,27 @@ async def get_status_checks():
 
 @api_router.post("/contact", response_model=ContactFormResponse)
 async def submit_contact_form(form_data: ContactFormRequest):
-    """Send contact form email via Mailgun"""
+    """Send contact form email via SMTP (ZeptoMail)"""
     try:
-        mailgun_api_key = os.environ.get('MAILGUN_API_KEY')
-        mailgun_domain = os.environ.get('MAILGUN_DOMAIN')
-        mailgun_sender = os.environ.get('MAILGUN_SENDER_EMAIL')
-        mailgun_recipient = os.environ.get('MAILGUN_RECIPIENT_EMAIL')
+        smtp_server = os.environ.get('SMTP_SERVER')
+        smtp_port = int(os.environ.get('SMTP_PORT', 587))
+        smtp_username = os.environ.get('SMTP_USERNAME')
+        smtp_password = os.environ.get('SMTP_PASSWORD')
+        smtp_sender_email = os.environ.get('SMTP_SENDER_EMAIL')
+        smtp_recipient_email = os.environ.get('SMTP_RECIPIENT_EMAIL')
         
-        if not all([mailgun_api_key, mailgun_domain, mailgun_sender, mailgun_recipient]):
-            logging.error("Mailgun configuration incomplete")
+        if not all([smtp_server, smtp_username, smtp_password, smtp_sender_email, smtp_recipient_email]):
+            logging.error("SMTP configuration incomplete")
             return ContactFormResponse(
                 success=False,
                 message="Configuration d'email incomplète"
             )
+        
+        # Create email message
+        msg = MIMEMultipart()
+        msg['From'] = f"BK Tech Contact <{smtp_sender_email}>"
+        msg['To'] = smtp_recipient_email
+        msg['Subject'] = f"Nouveau contact: {form_data.name}"
         
         # Format email body
         email_body = f"""Nouveau message de contact BK Tech
@@ -105,23 +113,18 @@ Téléphone: {form_data.phone}
 
 Message:
 {form_data.message}
+
+---
+Ce message a été envoyé via le formulaire de contact de bktech.dev
 """
         
-        # Send email via Mailgun
-        response = requests.post(
-            f"https://api.mailgun.net/v3/{mailgun_domain}/messages",
-            auth=("api", mailgun_api_key),
-            data={
-                "from": f"BK Tech Contact Form <{mailgun_sender}>",
-                "to": mailgun_recipient,
-                "subject": f"Nouveau contact: {form_data.name}",
-                "text": email_body
-            },
-            timeout=10
-        )
+        msg.attach(MIMEText(email_body, 'plain'))
         
-        response.raise_for_status()
-        result = response.json()
+        # Send email via SMTP
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(smtp_username, smtp_password)
+            server.send_message(msg)
         
         # Save to database
         contact_record = {
@@ -130,20 +133,20 @@ Message:
             "phone": form_data.phone,
             "message": form_data.message,
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "mailgun_id": result.get("id", "")
+            "sent_via": "smtp"
         }
         await db.contacts.insert_one(contact_record)
         
-        logging.info(f"Contact form email sent: {result.get('id')}")
+        logging.info(f"Contact form email sent via SMTP to {smtp_recipient_email}")
         
         return ContactFormResponse(
             success=True,
             message="Votre message a été envoyé avec succès !",
-            message_id=result.get("id")
+            message_id=None
         )
         
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Mailgun API error: {str(e)}")
+    except smtplib.SMTPException as e:
+        logging.error(f"SMTP error: {str(e)}")
         return ContactFormResponse(
             success=False,
             message="Erreur lors de l'envoi du message. Veuillez réessayer."
