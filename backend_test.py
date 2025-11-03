@@ -41,14 +41,15 @@ def test_contact_form_valid_submission():
         
         if response.status_code == 200:
             data = response.json()
-            if data.get("success") == True:
+            if data.get("success") == True and data.get("message") == "Votre message a été envoyé avec succès !":
                 print("✅ Valid submission test PASSED")
                 print(f"   Message: {data.get('message')}")
                 if data.get('message_id'):
                     print(f"   Message ID: {data.get('message_id')}")
+                print("   ✅ Expected response format confirmed")
                 return True
             else:
-                print("❌ Valid submission test FAILED - success=False")
+                print("❌ Valid submission test FAILED - success=False or incorrect message")
                 print(f"   Error message: {data.get('message')}")
                 return False
         else:
