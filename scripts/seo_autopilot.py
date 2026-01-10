@@ -2,12 +2,18 @@ import os
 import re
 import json
 import time
+import base64
 from datetime import date
 from pathlib import Path
+import requests
 
-OUT_BASE = "pages/blog"  # ✅ IMPORTANT: c'est ici que ton site lit les .md
+OUT_BASE = "pages/blog"                 # ✅ tes articles visibles
+IMAGE_DIR = Path("public/blog/images")  # ✅ images visibles sur le site
+BOOK_CALL_URL = "https://www.bktech.dev/contact"
 
-# Ajuste tes keywords ici
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_IMAGE_MODEL = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-1")  # modèle image
+
 KEYWORDS = {
     "fr": [
         "Combien coûte une application mobile",
@@ -32,7 +38,6 @@ DEFAULTS = {
 
 def slugify(s: str) -> str:
     s = s.lower().strip()
-    # remplace accents simples
     s = (s.replace("é", "e").replace("è", "e").replace("ê", "e")
            .replace("à", "a").replace("â", "a")
            .replace("ù", "u").replace("û", "u")
@@ -41,16 +46,68 @@ def slugify(s: str) -> str:
     s = re.sub(r"[^a-z0-9\s-]", "", s)
     s = re.sub(r"\s+", "-", s)
     s = re.sub(r"-+", "-", s)
-    return s[:80].strip("-") or "article"
+    return s[:90].strip("-") or "article"
 
-def make_front_matter(title: str, lang: str) -> str:
+def openai_generate_image(title: str, out_path: Path) -> str:
+    """
+    Génère une image PNG via OpenAI Images API et l'enregistre dans public/.
+    Docs: Images API /v1/images/generations. :contentReference[oaicite:0]{index=0}
+    """
+    if out_path.exists():
+        return f"/blog/images/{out_path.name}"
+
+    if not OPENAI_API_KEY:
+        # fallback si la clé n'est pas dispo
+        return "https://placehold.co/1200x630/png?text=BK+Tech"
+
+    prompt = (
+        "Create a clean, modern, premium blog header image. "
+        "Theme: custom app development / technology. "
+        f"Topic: {title}. "
+        "Style: minimal, professional, soft gradients, blue/white palette, "
+        "abstract shapes, subtle tech elements (no logos), NO TEXT."
+    )
+
+    url = "https://api.openai.com/v1/images/generations"
+    headers = {
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "model": OPENAI_IMAGE_MODEL,
+        "prompt": prompt,
+        "size": "1200x630",
+        "output_format": "png",
+    }
+
+    # retry simple (évite les erreurs temporaires)
+    for attempt in range(1, 6):
+        r = requests.post(url, headers=headers, json=payload, timeout=120)
+        if r.status_code == 200:
+            data = r.json()
+            b64 = data["data"][0].get("b64_json")
+            if not b64:
+                # fallback si format différent
+                return "https://placehold.co/1200x630/png?text=BK+Tech"
+
+            IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+            out_path.write_bytes(base64.b64decode(b64))
+            return f"/blog/images/{out_path.name}"
+
+        # 429 / 5xx => on attend et on retente
+        if r.status_code in (429, 500, 502, 503, 504):
+            time.sleep(2 * attempt)
+            continue
+
+        # autres erreurs
+        return "https://placehold.co/1200x630/png?text=BK+Tech"
+
+    return "https://placehold.co/1200x630/png?text=BK+Tech"
+
+def make_front_matter(title: str, lang: str, image_url: str) -> str:
     today = date.today().isoformat()
     d = DEFAULTS[lang]
 
-    # image placeholder (tu peux remplacer plus tard)
-    image = "https://placehold.co/1200x630/png"
-
-    # description courte SEO
     if lang == "fr":
         description = f"Guide BK Tech : {title}. Prix, délais, étapes et bonnes pratiques pour réussir votre application."
     else:
@@ -61,7 +118,7 @@ def make_front_matter(title: str, lang: str) -> str:
     return f"""---
 title: "{title}"
 date: "{today}"
-image: "{image}"
+image: "{image_url}"
 category: "{d['category']}"
 tags: {tags_json}
 description: "{description}"
@@ -74,57 +131,57 @@ def make_body(title: str, lang: str) -> str:
         return f"""
 # {title}
 
-## Ce que vous allez apprendre
-- Les facteurs qui influencent le prix et les délais
+## Points clés
+- Ce qui influence le prix et les délais
 - Les erreurs fréquentes à éviter
-- Une méthode claire pour cadrer votre projet
+- Une méthode simple pour cadrer votre projet
 
-## Les facteurs clés (budget, délai, complexité)
-Expliquez ici les éléments : fonctionnalités, design, backend, intégrations, maintenance.
+## Les facteurs de coût
+Expliquez : fonctionnalités, UI/UX, backend, intégrations, sécurité, maintenance.
 
 ## Notre approche chez BK Tech
-- Atelier cadrage
-- UI/UX
+- Atelier de cadrage
+- Design UI/UX
 - Développement itératif
-- Tests & mise en production
+- QA, mise en production, suivi
 
 ## FAQ
 **Combien de temps pour développer une app ?**  
-Cela dépend du périmètre, en général de quelques semaines à plusieurs mois.
+Cela dépend du périmètre : généralement de quelques semaines à plusieurs mois.
 
 **Quel budget prévoir ?**  
-Le budget varie selon la complexité et les intégrations.
+Le budget dépend de la complexité et des intégrations.
 
-## Contact
-👉 Réserver un appel : https://bktech.com
+## Prendre rendez-vous
+👉 Remplir le formulaire : {BOOK_CALL_URL}
 """.lstrip()
     else:
         return f"""
 # {title}
 
-## What you’ll learn
+## Key takeaways
 - What drives cost and timeline
 - Common mistakes to avoid
-- A clear process to scope your project
+- A simple process to scope your project
 
-## Key drivers (budget, timeline, complexity)
-Cover features, design, backend, integrations, maintenance.
+## Cost drivers
+Features, UI/UX, backend, integrations, security, maintenance.
 
 ## BK Tech approach
 - Scoping workshop
-- UI/UX
+- UI/UX design
 - Iterative development
-- QA & production release
+- QA, production release, support
 
 ## FAQ
 **How long does it take to build an app?**  
-It depends on scope—typically weeks to months.
+Depends on scope—typically weeks to months.
 
 **How much does an app cost?**  
-It varies by complexity and integrations.
+Varies by complexity and integrations.
 
-## Contact
-👉 Book a call: https://bktech.com
+## Book a call
+👉 Fill the form: {BOOK_CALL_URL}
 """.lstrip()
 
 def write_article(lang: str, title: str) -> str:
@@ -135,28 +192,28 @@ def write_article(lang: str, title: str) -> str:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     filename = f"{today}-{slug}.md"
-    path = out_dir / filename
+    md_path = out_dir / filename
 
-    # évite d’écraser si déjà généré aujourd’hui
-    if path.exists():
-        return str(path)
+    # évite de régénérer si déjà là
+    if md_path.exists():
+        return str(md_path)
 
-    fm = make_front_matter(title, lang)
+    # image liée au sujet
+    img_path = IMAGE_DIR / f"{today}-{slug}.png"
+    image_url = openai_generate_image(title, img_path)
+
+    fm = make_front_matter(title, lang, image_url)
     body = make_body(title, lang)
 
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(fm + "\n" + body)
-
-    return str(path)
+    md_path.write_text(fm + "\n" + body, encoding="utf-8")
+    return str(md_path)
 
 def main():
     created = []
     for lang, titles in KEYWORDS.items():
-        if lang not in ("fr", "en"):
-            continue
         for title in titles:
             created.append(write_article(lang, title))
-            time.sleep(1)  # petite pause pour éviter des commits trop “agressifs”
+            time.sleep(1)
 
     print("Created files:")
     for p in created:
