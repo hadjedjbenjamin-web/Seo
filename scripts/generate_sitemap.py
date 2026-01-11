@@ -1,39 +1,58 @@
 from pathlib import Path
 from datetime import date
 
-BASE_URL = "https://www.bktech.dev"
+BASE_URLS = [
+    "https://www.bktech.dev",
+    "https://bktech.dev",
+]
+
 BLOG_DIR = Path("pages/blog")
+OUT_FILE = Path("pages/sitemap.xml")
 
-urls = []
+def collect_urls():
+    urls = set()
 
-# Pages fixes
-urls.append(f"{BASE_URL}/")
-urls.append(f"{BASE_URL}/blog")
-urls.append(f"{BASE_URL}/blog/fr")
-urls.append(f"{BASE_URL}/blog/en")
+    # Pages fixes
+    for base in BASE_URLS:
+        urls.add(f"{base}/")
+        urls.add(f"{base}/blog")
+        urls.add(f"{base}/blog/fr")
+        urls.add(f"{base}/blog/en")
 
-# Articles
-for lang in ["fr", "en"]:
-    for md in (BLOG_DIR / lang).glob("*.md"):
-        if md.name == "index.md":
+    # Articles
+    for lang in ["fr", "en"]:
+        lang_dir = BLOG_DIR / lang
+        if not lang_dir.exists():
             continue
-        slug = md.stem
-        urls.append(f"{BASE_URL}/blog/{slug}?lang={lang}")
 
-today = date.today().isoformat()
+        for md in lang_dir.glob("*.md"):
+            if md.name == "index.md":
+                continue
+            slug = md.stem
+            for base in BASE_URLS:
+                urls.add(f"{base}/blog/{slug}?lang={lang}")
 
-xml = ['<?xml version="1.0" encoding="UTF-8"?>']
-xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    return sorted(urls)
 
-for url in urls:
-    xml.append("  <url>")
-    xml.append(f"    <loc>{url}</loc>")
-    xml.append(f"    <lastmod>{today}</lastmod>")
-    xml.append("  </url>")
+def main():
+    urls = collect_urls()
+    today = date.today().isoformat()
 
-xml.append("</urlset>")
+    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
 
-Path("public").mkdir(exist_ok=True)
-Path("public/sitemap.xml").write_text("\n".join(xml), encoding="utf-8")
+    for url in urls:
+        xml.append("  <url>")
+        xml.append(f"    <loc>{url}</loc>")
+        xml.append(f"    <lastmod>{today}</lastmod>")
+        xml.append("  </url>")
 
-print("sitemap.xml generated with", len(urls), "urls")
+    xml.append("</urlset>")
+    OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUT_FILE.write_text("\n".join(xml), encoding="utf-8")
+
+    print("✅ sitemap generated:", str(OUT_FILE))
+    print("✅ urls:", len(urls))
+
+if __name__ == "__main__":
+    main()
