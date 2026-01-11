@@ -3,15 +3,12 @@ from datetime import date
 
 BASE_URL = "https://www.bktech.dev"
 BLOG_DIR = Path("pages/blog")
-
-# ✅ IMPORTANT : CRA/CRACO sert les fichiers depuis frontend/public/
-OUT_FILE = Path("frontend/public/sitemap.xml")
+OUT_FILE = Path("pages/blog/sitemap.xml")  # ✅ sitemap servi sous /blog/sitemap.xml
 
 def collect_urls():
     urls = []
 
-    # Pages fixes
-    urls.append(f"{BASE_URL}/")
+    # Pages blog
     urls.append(f"{BASE_URL}/blog")
     urls.append(f"{BASE_URL}/blog/fr")
     urls.append(f"{BASE_URL}/blog/en")
@@ -28,7 +25,7 @@ def collect_urls():
             slug = md.stem
             urls.append(f"{BASE_URL}/blog/{slug}?lang={lang}")
 
-    # supprimer doublons en gardant l'ordre
+    # dédoublonnage
     seen = set()
     out = []
     for u in urls:
