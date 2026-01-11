@@ -2,8 +2,52 @@ import os
 import re
 import json
 import time
+import base64
+import requests
 from datetime import datetime, date
 from pathlib import Path
+
+def openai_generate_image(title: str) -> str:
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("Missing OPENAI_API_KEY")
+
+    prompt = (
+        "Modern, clean, premium blog header image. "
+        "Theme: custom software and mobile app development. "
+        f"Topic: {title}. "
+        "Style: professional, minimal, blue and white, abstract tech, NO TEXT."
+    )
+
+    r = requests.post(
+        "https://api.openai.com/v1/images/generations",
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": "gpt-image-1",
+            "prompt": prompt,
+            "size": "1200x630",
+        },
+        timeout=90,
+    )
+
+    r.raise_for_status()
+    data = r.json()
+
+    b64 = data["data"][0]["b64_json"]
+    img_bytes = base64.b64decode(b64)
+
+    img_dir = Path("public/blog/images")
+    img_dir.mkdir(parents=True, exist_ok=True)
+
+    filename = slugify(title)[:60] + ".png"
+    path = img_dir / filename
+    path.write_bytes(img_bytes)
+
+    return f"/blog/images/{filename}"
+
 
 OUT_BASE = "pages/blog"
 BOOK_CALL_URL = "https://www.bktech.dev/contact"
@@ -90,6 +134,10 @@ def write_article(lang: str, title: str, run_id: str) -> str:
     md_path = out_dir / filename
 
     # ✅ placeholder image (on remet OpenAI image après)
+    try:
+    image_url = openai_generate_image(title)
+except Exception as e:
+    print("[WARN] Image generation failed:", e)
     image_url = "https://placehold.co/1200x630/png?text=BK+Tech"
 
     description = (
