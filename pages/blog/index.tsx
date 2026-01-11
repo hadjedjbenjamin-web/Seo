@@ -9,6 +9,23 @@ export default function BlogHome() {
         minHeight: "100vh",
       }}
     >
+      {/* ✅ TEST VISUEL (tu dois le voir en bas à droite) */}
+      <div
+        style={{
+          position: "fixed",
+          bottom: 12,
+          right: 12,
+          background: "#ef4444",
+          color: "white",
+          padding: "8px 10px",
+          borderRadius: 10,
+          fontWeight: 700,
+          zIndex: 999999,
+        }}
+      >
+        BLOG OK
+      </div>
+
       <section
         style={{
           maxWidth: 860,
@@ -34,13 +51,13 @@ export default function BlogHome() {
           style={{
             fontSize: 18,
             opacity: 0.8,
-            maxWidth: 520,
+            maxWidth: 560,
             margin: "0 auto 36px",
-            lineHeight: 1.6,
+            lineHeight: 1.7,
           }}
         >
-          Analyses, conseils et retours d’expérience sur le développement
-          d’applications, le SEO et les technologies modernes.
+          Choisis ta langue pour lire nos articles sur le développement
+          d’applications, le SEO et les technologies.
         </p>
 
         <div
@@ -59,13 +76,12 @@ export default function BlogHome() {
               border: "1px solid #e5e7eb",
               background: "#ffffff",
               fontSize: 16,
-              fontWeight: 600,
+              fontWeight: 700,
               textDecoration: "none",
               color: "#0f172a",
-              transition: "all 0.2s ease",
             }}
           >
-            🇫🇷 Lire en français
+            🇫🇷 Français
           </Link>
 
           <Link
@@ -76,3 +92,15 @@ export default function BlogHome() {
               border: "1px solid #e5e7eb",
               background: "#ffffff",
               fontSize: 16,
+              fontWeight: 700,
+              textDecoration: "none",
+              color: "#0f172a",
+            }}
+          >
+            🇬🇧 English
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}
