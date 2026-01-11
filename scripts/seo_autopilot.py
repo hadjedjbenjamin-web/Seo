@@ -194,9 +194,12 @@ def write_article(lang: str, title: str) -> str:
     filename = f"{today}-{slug}.md"
     md_path = out_dir / filename
 
-    # évite de régénérer si déjà là
-    if md_path.exists():
-        return str(md_path)
+    # Si le fichier existe déjà, on crée une variante (-2, -3, etc.)
+i = 2
+while md_path.exists():
+    md_path = out_dir / f"{today}-{slug}-{i}.md"
+    i += 1
+
 
     # image liée au sujet
     img_path = IMAGE_DIR / f"{today}-{slug}.png"
