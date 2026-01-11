@@ -1,5 +1,10 @@
-# Blog – Français 🇫🇷
+# Blog BK Tech (FR)
 
-Découvrez nos articles sur la création d’applications, les coûts, les délais et les bonnes pratiques.
+Derniers articles (clique pour lire) :
 
-## Articles récents
+- [Creation dapplication sur mesure etapes budget et delais](/blog/2026-01-11-creation-dapplication-sur-mesure-etapes-budget-et-delais-202946?lang=fr)
+- [Creation dapplication sur mesure etapes budget et delais](/blog/2026-01-11-creation-dapplication-sur-mesure-etapes-budget-et-delais-201454?lang=fr)
+- [Creation dapplication sur mesure etapes budget et delais](/blog/2026-01-11-creation-dapplication-sur-mesure-etapes-budget-et-delais-122243?lang=fr)
+- [Combien coute une application mobile en 2026](/blog/2026-01-11-combien-coute-une-application-mobile-en-2026-202946?lang=fr)
+- [Combien coute une application mobile en 2026](/blog/2026-01-11-combien-coute-une-application-mobile-en-2026-201454?lang=fr)
+- [Combien coute une application mobile en 2026](/blog/2026-01-11-combien-coute-une-application-mobile-en-2026-122243?lang=fr)
