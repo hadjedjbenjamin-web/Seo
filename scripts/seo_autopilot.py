@@ -7,7 +7,7 @@ from pathlib import Path
 # =========================
 # CONFIG
 # =========================
-OUT_BASE = "pages/blog"
+OUT_BASE = Path("pages/blog")
 BOOK_CALL_URL = "https://www.bktech.dev/contact"
 
 KEYWORDS = {
@@ -32,7 +32,6 @@ DEFAULTS = {
     },
 }
 
-# Image fixe (simple et propre)
 DEFAULT_IMAGE = "https://placehold.co/1200x630/png?text=BK+Tech"
 
 # =========================
@@ -52,16 +51,14 @@ def slugify(text: str) -> str:
     text = re.sub(r"-+", "-", text)
     return text[:90].strip("-") or "article"
 
-def fm(title: str, lang: str) -> str:
+def front_matter(title: str, lang: str) -> str:
     today = date.today().isoformat()
     d = DEFAULTS[lang]
-
     description = (
         f"Guide BK Tech : {title}. Méthode, budget, délais et conseils concrets."
         if lang == "fr"
         else f"BK Tech guide: {title}. Process, budget, timeline and practical tips."
     )
-
     return f"""---
 title: "{title}"
 date: "{today}"
@@ -73,7 +70,7 @@ author: "BK Tech"
 ---
 """
 
-def md_article(title: str, lang: str) -> str:
+def article_body(title: str, lang: str) -> str:
     if lang == "fr":
         return f"""# {title}
 
@@ -85,38 +82,29 @@ Dans cet article, on te donne une méthode claire pour estimer **le budget**, **
 ---
 
 ## 1) Les facteurs qui font varier le prix
-- **Fonctionnalités** (auth, paiement, chat, admin, etc.)
-- **Design UI/UX** (maquettes, parcours, responsive)
-- **Backend & base de données**
-- **Intégrations** (Stripe, CRM, API externes, analytics)
-- **Qualité & sécurité** (tests, perf, RGPD)
-- **Maintenance** (correctifs, évolutions)
+- Fonctionnalités (auth, paiement, chat, admin…)
+- Design UI/UX (parcours, maquettes)
+- Backend & base de données
+- Intégrations (Stripe, CRM, API externes)
+- Qualité & sécurité (tests, perf, RGPD)
+- Maintenance (correctifs, évolutions)
 
-## 2) Les fourchettes de délais (réalistes)
+## 2) Délais réalistes
 - MVP simple : **4 à 8 semaines**
 - App standard : **8 à 14 semaines**
-- Produit complexe : **3 à 6 mois**
+- Projet complexe : **3 à 6 mois**
 
-## 3) La méthode BK Tech (simple et efficace)
-1. Cadrage (objectif + périmètre + priorités)
+## 3) La méthode BK Tech
+1. Cadrage (objectif + périmètre)
 2. UI/UX (wireframes → maquettes)
-3. Dev itératif (sprints)
+3. Développement itératif (sprints)
 4. Tests + mise en production
 5. Suivi / évolutions
 
 ---
 
-## FAQ
-**Combien coûte une application ?**  
-Ça dépend du périmètre. Le plus important est de définir un MVP clair.
-
-**Puis-je démarrer vite ?**  
-Oui : on peut cadrer un MVP et itérer ensuite.
-
----
-
 ## Prendre rendez-vous
-👉 Remplir le formulaire : {BOOK_CALL_URL}
+👉 {BOOK_CALL_URL}
 """
     else:
         return f"""# {title}
@@ -124,17 +112,17 @@ Oui : on peut cadrer un MVP et itérer ensuite.
 > **BK Tech** — Custom app development (France • UAE • International)
 
 ## Summary
-In this article, you’ll learn a clear way to estimate **budget**, **timeline**, and scope your app without surprises.
+A clear way to estimate **budget**, **timeline**, and scope your app without surprises.
 
 ---
 
-## 1) What drives the cost
-- **Features** (auth, payments, chat, admin, etc.)
-- **UI/UX design** (flows, mockups, responsive)
-- **Backend & database**
-- **Integrations** (Stripe, CRM, external APIs, analytics)
-- **Quality & security** (testing, performance)
-- **Maintenance** (fixes, updates)
+## 1) Cost drivers
+- Features (auth, payments, chat, admin…)
+- UI/UX (flows, mockups)
+- Backend & database
+- Integrations (Stripe, CRM, external APIs)
+- Quality & security (testing, performance)
+- Maintenance (fixes, upgrades)
 
 ## 2) Realistic timelines
 - Simple MVP: **4–8 weeks**
@@ -142,40 +130,68 @@ In this article, you’ll learn a clear way to estimate **budget**, **timeline**
 - Complex product: **3–6 months**
 
 ## 3) BK Tech process
-1. Scoping (goals + scope + priorities)
-2. UI/UX (wireframes → mockups)
-3. Iterative development (sprints)
-4. QA + production launch
+1. Scoping
+2. UI/UX
+3. Iterative development
+4. QA + launch
 5. Maintenance / upgrades
 
 ---
 
-## FAQ
-**How much does an app cost?**  
-It depends on scope. The key is defining a clear MVP.
-
-**Can we start fast?**  
-Yes—scope an MVP and iterate.
-
----
-
 ## Book a call
-👉 Fill the form: {BOOK_CALL_URL}
+👉 {BOOK_CALL_URL}
 """
 
-def write_article(lang: str, title: str, run_id: str) -> str:
-    out_dir = Path(OUT_BASE) / lang
+def write_article(lang: str, title: str, run_id: str) -> Path:
+    out_dir = OUT_BASE / lang
     out_dir.mkdir(parents=True, exist_ok=True)
 
     today = date.today().isoformat()
     slug = slugify(title)
+
     filename = f"{today}-{slug}-{run_id}.md"
     path = out_dir / filename
 
-    content = fm(title, lang) + "\n" + md_article(title, lang)
+    content = front_matter(title, lang) + "\n" + article_body(title, lang)
     path.write_text(content, encoding="utf-8")
 
-    return str(path)
+    return path
+
+def update_index(lang: str) -> None:
+    """
+    Met à jour pages/blog/<lang>/index.md avec une liste de liens vers les articles.
+    Les URLs suivent ton format actuel : /blog/<slug>?lang=fr|en
+    """
+    lang_dir = OUT_BASE / lang
+    index_path = lang_dir / "index.md"
+
+    posts = sorted(
+        [p for p in lang_dir.glob("*.md") if p.name != "index.md"],
+        reverse=True
+    )
+
+    title = "Blog BK Tech (FR)" if lang == "fr" else "BK Tech Blog (EN)"
+    intro = (
+        "Derniers articles (clique pour lire) :"
+        if lang == "fr"
+        else "Latest posts (click to read):"
+    )
+
+    lines = [f"# {title}", "", intro, ""]
+
+    for p in posts[:50]:
+        slug = p.stem  # filename without .md
+        # Important: tes articles sont accessibles via /blog/<slug>?lang=xx
+        url = f"/blog/{slug}?lang={lang}"
+        # titre lisible : on enlève la date-runid du filename
+        pretty = slug
+        pretty = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", pretty)
+        pretty = re.sub(r"-\d{6}$", "", pretty)  # run_id si 6 chiffres
+        pretty = pretty.replace("-", " ").strip().capitalize()
+        lines.append(f"- [{pretty}]({url})")
+
+    index_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"[INDEX] updated: {index_path}")
 
 def main():
     run_id = datetime.utcnow().strftime("%H%M%S")
@@ -186,6 +202,10 @@ def main():
         for title in titles:
             created.append(write_article(lang, title, run_id))
             time.sleep(1)
+
+    # ✅ met à jour les pages de listing
+    update_index("fr")
+    update_index("en")
 
     print("Created files:")
     for p in created:
