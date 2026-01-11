@@ -1,0 +1,57 @@
+.blog-shell {
+  min-height: 100vh;
+  padding: 72px 16px;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.blog-article {
+  max-width: 860px;
+  margin: 0 auto;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter,
+    Arial, sans-serif;
+  line-height: 1.85;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.blog-article h1 {
+  font-size: 44px;
+  line-height: 1.12;
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+}
+
+.blog-article h2 {
+  font-size: 28px;
+  margin: 34px 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.blog-article p {
+  margin: 14px 0;
+}
+
+.blog-article ul {
+  margin: 12px 0 18px 22px;
+}
+
+.blog-article li {
+  margin: 6px 0;
+}
+
+.blog-article blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding: 10px 0 10px 14px;
+  margin: 18px 0;
+  color: #334155;
+}
+
+.blog-article a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.blog-article a:hover {
+  text-decoration: underline;
+}
