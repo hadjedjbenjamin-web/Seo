@@ -1,14 +1,15 @@
 from pathlib import Path
-from datetime import date
 
 BASE_URL = "https://www.bktech.dev"
 BLOG_DIR = Path("pages/blog")
-OUT_FILE = Path("pages/blog/sitemap.xml")  # ✅ sitemap servi sous /blog/sitemap.xml
+
+# ✅ TXT sitemap (Google accepte)
+OUT_FILE = Path("pages/sitemap.txt")  # sera accessible sur /sitemap.txt si .txt est autorisé
 
 def collect_urls():
     urls = []
 
-    # Pages blog
+    # Pages principales blog
     urls.append(f"{BASE_URL}/blog")
     urls.append(f"{BASE_URL}/blog/fr")
     urls.append(f"{BASE_URL}/blog/en")
@@ -25,7 +26,7 @@ def collect_urls():
             slug = md.stem
             urls.append(f"{BASE_URL}/blog/{slug}?lang={lang}")
 
-    # dédoublonnage
+    # Dédoublonnage
     seen = set()
     out = []
     for u in urls:
@@ -36,23 +37,9 @@ def collect_urls():
 
 def main():
     urls = collect_urls()
-    today = date.today().isoformat()
-
-    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
-    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
-
-    for url in urls:
-        xml.append("  <url>")
-        xml.append(f"    <loc>{url}</loc>")
-        xml.append(f"    <lastmod>{today}</lastmod>")
-        xml.append("  </url>")
-
-    xml.append("</urlset>")
-
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUT_FILE.write_text("\n".join(xml), encoding="utf-8")
-
-    print("✅ sitemap generated:", OUT_FILE)
+    OUT_FILE.write_text("\n".join(urls) + "\n", encoding="utf-8")
+    print("✅ sitemap.txt generated:", OUT_FILE)
     print("✅ urls:", len(urls))
 
 if __name__ == "__main__":
