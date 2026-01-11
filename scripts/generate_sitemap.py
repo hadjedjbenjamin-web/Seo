@@ -1,23 +1,20 @@
 from pathlib import Path
 from datetime import date
 
-BASE_URLS = [
-    "https://www.bktech.dev",
-    "https://bktech.dev",
-]
-
+BASE_URL = "https://www.bktech.dev"
 BLOG_DIR = Path("pages/blog")
-OUT_FILE = Path("pages/sitemap.xml")
+
+# ✅ IMPORTANT : CRA/CRACO sert les fichiers depuis frontend/public/
+OUT_FILE = Path("frontend/public/sitemap.xml")
 
 def collect_urls():
-    urls = set()
+    urls = []
 
     # Pages fixes
-    for base in BASE_URLS:
-        urls.add(f"{base}/")
-        urls.add(f"{base}/blog")
-        urls.add(f"{base}/blog/fr")
-        urls.add(f"{base}/blog/en")
+    urls.append(f"{BASE_URL}/")
+    urls.append(f"{BASE_URL}/blog")
+    urls.append(f"{BASE_URL}/blog/fr")
+    urls.append(f"{BASE_URL}/blog/en")
 
     # Articles
     for lang in ["fr", "en"]:
@@ -25,14 +22,20 @@ def collect_urls():
         if not lang_dir.exists():
             continue
 
-        for md in lang_dir.glob("*.md"):
+        for md in sorted(lang_dir.glob("*.md"), reverse=True):
             if md.name == "index.md":
                 continue
             slug = md.stem
-            for base in BASE_URLS:
-                urls.add(f"{base}/blog/{slug}?lang={lang}")
+            urls.append(f"{BASE_URL}/blog/{slug}?lang={lang}")
 
-    return sorted(urls)
+    # supprimer doublons en gardant l'ordre
+    seen = set()
+    out = []
+    for u in urls:
+        if u not in seen:
+            out.append(u)
+            seen.add(u)
+    return out
 
 def main():
     urls = collect_urls()
@@ -48,10 +51,11 @@ def main():
         xml.append("  </url>")
 
     xml.append("</urlset>")
+
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUT_FILE.write_text("\n".join(xml), encoding="utf-8")
 
-    print("✅ sitemap generated:", str(OUT_FILE))
+    print("✅ sitemap generated:", OUT_FILE)
     print("✅ urls:", len(urls))
 
 if __name__ == "__main__":
