@@ -1,38 +1,39 @@
-import os
 import re
 import json
 import time
-import base64
 from datetime import date, datetime
 from pathlib import Path
-
-import requests
 
 # =========================
 # CONFIG
 # =========================
 OUT_BASE = "pages/blog"
-IMAGE_DIR = Path("public/blog/images")
 BOOK_CALL_URL = "https://www.bktech.dev/contact"
 
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-OPENAI_IMAGE_MODEL = "gpt-image-1"
-
 KEYWORDS = {
-    "fr": ["Combien coûte une application mobile"],
-    "en": ["Mobile app development cost"],
+    "fr": [
+        "Combien coûte une application mobile en 2026",
+        "Création d’application sur mesure : étapes, budget et délais",
+    ],
+    "en": [
+        "Mobile app development cost in 2026",
+        "Custom app development: timeline, budget and process",
+    ],
 }
 
 DEFAULTS = {
     "fr": {
         "category": "Développement d'applications",
-        "tags": ["application mobile", "startup", "prix", "bk tech"],
+        "tags": ["application mobile", "startup", "budget", "bk tech"],
     },
     "en": {
         "category": "App Development",
-        "tags": ["mobile app", "startup", "pricing", "bk tech"],
+        "tags": ["mobile app", "startup", "budget", "bk tech"],
     },
 }
+
+# Image fixe (simple et propre)
+DEFAULT_IMAGE = "https://placehold.co/1200x630/png?text=BK+Tech"
 
 # =========================
 # HELPERS
@@ -49,71 +50,22 @@ def slugify(text: str) -> str:
     text = re.sub(r"[^a-z0-9\s-]", "", text)
     text = re.sub(r"\s+", "-", text)
     text = re.sub(r"-+", "-", text)
-    return text[:80].strip("-") or "article"
+    return text[:90].strip("-") or "article"
 
-def placeholder_image() -> str:
-    return "https://placehold.co/1536x1024/png?text=BK+Tech"
-
-# =========================
-# OPENAI IMAGE (CORRECT PAYLOAD)
-# =========================
-def openai_generate_image(title: str, filename: str) -> str:
-    if not OPENAI_API_KEY:
-        raise RuntimeError("OPENAI_API_KEY missing")
-
-    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = IMAGE_DIR / filename
-
-    if out_path.exists():
-        return f"/blog/images/{filename}"
-
-    prompt = (
-        "Modern premium blog header image. "
-        "Theme: custom software and mobile app development. "
-        f"Topic: {title}. "
-        "Style: minimal, professional, abstract tech, blue and white palette, "
-        "soft gradients, NO TEXT."
-    )
-
-    url = "https://api.openai.com/v1/images/generations"
-    headers = {
-        "Authorization": f"Bearer {OPENAI_API_KEY}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": OPENAI_IMAGE_MODEL,
-        "prompt": prompt,
-        "size": "1536x1024"
-    }
-
-    r = requests.post(url, headers=headers, json=payload, timeout=120)
-
-    if r.status_code != 200:
-        raise RuntimeError(f"OpenAI image generation failed: {r.status_code} {r.text}")
-
-    data = r.json()
-    b64 = data["data"][0]["b64_json"]
-    out_path.write_bytes(base64.b64decode(b64))
-
-    return f"/blog/images/{filename}"
-
-# =========================
-# CONTENT
-# =========================
-def front_matter(title: str, lang: str, image_url: str) -> str:
+def fm(title: str, lang: str) -> str:
     today = date.today().isoformat()
     d = DEFAULTS[lang]
 
     description = (
-        f"Guide BK Tech : {title}. Prix, délais et bonnes pratiques."
+        f"Guide BK Tech : {title}. Méthode, budget, délais et conseils concrets."
         if lang == "fr"
-        else f"BK Tech guide: {title}. Costs, timelines and best practices."
+        else f"BK Tech guide: {title}. Process, budget, timeline and practical tips."
     )
 
     return f"""---
 title: "{title}"
 date: "{today}"
-image: "{image_url}"
+image: "{DEFAULT_IMAGE}"
 category: "{d['category']}"
 tags: {json.dumps(d['tags'], ensure_ascii=False)}
 description: "{description}"
@@ -121,61 +73,110 @@ author: "BK Tech"
 ---
 """
 
-def body(title: str, lang: str) -> str:
+def md_article(title: str, lang: str) -> str:
     if lang == "fr":
-        return f"""
-# {title}
+        return f"""# {title}
 
-## Ce que vous devez savoir
-- Facteurs de coût réels
-- Délais de développement
-- Bonnes pratiques BK Tech
+> **BK Tech** — Création d’applications sur mesure (France • UAE • International)
+
+## Résumé
+Dans cet article, on te donne une méthode claire pour estimer **le budget**, **les délais** et cadrer ton projet sans mauvaises surprises.
+
+---
+
+## 1) Les facteurs qui font varier le prix
+- **Fonctionnalités** (auth, paiement, chat, admin, etc.)
+- **Design UI/UX** (maquettes, parcours, responsive)
+- **Backend & base de données**
+- **Intégrations** (Stripe, CRM, API externes, analytics)
+- **Qualité & sécurité** (tests, perf, RGPD)
+- **Maintenance** (correctifs, évolutions)
+
+## 2) Les fourchettes de délais (réalistes)
+- MVP simple : **4 à 8 semaines**
+- App standard : **8 à 14 semaines**
+- Produit complexe : **3 à 6 mois**
+
+## 3) La méthode BK Tech (simple et efficace)
+1. Cadrage (objectif + périmètre + priorités)
+2. UI/UX (wireframes → maquettes)
+3. Dev itératif (sprints)
+4. Tests + mise en production
+5. Suivi / évolutions
+
+---
+
+## FAQ
+**Combien coûte une application ?**  
+Ça dépend du périmètre. Le plus important est de définir un MVP clair.
+
+**Puis-je démarrer vite ?**  
+Oui : on peut cadrer un MVP et itérer ensuite.
+
+---
 
 ## Prendre rendez-vous
-👉 {BOOK_CALL_URL}
-""".lstrip()
+👉 Remplir le formulaire : {BOOK_CALL_URL}
+"""
+    else:
+        return f"""# {title}
 
-    return f"""
-# {title}
+> **BK Tech** — Custom app development (France • UAE • International)
 
-## What you need to know
-- Real cost drivers
-- Development timelines
-- BK Tech best practices
+## Summary
+In this article, you’ll learn a clear way to estimate **budget**, **timeline**, and scope your app without surprises.
+
+---
+
+## 1) What drives the cost
+- **Features** (auth, payments, chat, admin, etc.)
+- **UI/UX design** (flows, mockups, responsive)
+- **Backend & database**
+- **Integrations** (Stripe, CRM, external APIs, analytics)
+- **Quality & security** (testing, performance)
+- **Maintenance** (fixes, updates)
+
+## 2) Realistic timelines
+- Simple MVP: **4–8 weeks**
+- Standard app: **8–14 weeks**
+- Complex product: **3–6 months**
+
+## 3) BK Tech process
+1. Scoping (goals + scope + priorities)
+2. UI/UX (wireframes → mockups)
+3. Iterative development (sprints)
+4. QA + production launch
+5. Maintenance / upgrades
+
+---
+
+## FAQ
+**How much does an app cost?**  
+It depends on scope. The key is defining a clear MVP.
+
+**Can we start fast?**  
+Yes—scope an MVP and iterate.
+
+---
 
 ## Book a call
-👉 {BOOK_CALL_URL}
-""".lstrip()
+👉 Fill the form: {BOOK_CALL_URL}
+"""
 
-# =========================
-# WRITE ARTICLE
-# =========================
 def write_article(lang: str, title: str, run_id: str) -> str:
     out_dir = Path(OUT_BASE) / lang
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    slug = slugify(title)
     today = date.today().isoformat()
+    slug = slugify(title)
+    filename = f"{today}-{slug}-{run_id}.md"
+    path = out_dir / filename
 
-    md_filename = f"{today}-{slug}-{run_id}.md"
-    md_path = out_dir / md_filename
+    content = fm(title, lang) + "\n" + md_article(title, lang)
+    path.write_text(content, encoding="utf-8")
 
-    img_filename = f"{today}-{slug}-{run_id}.png"
+    return str(path)
 
-    try:
-        image_url = openai_generate_image(title, img_filename)
-    except Exception as e:
-        print("[WARN] Image generation failed:", e)
-        image_url = placeholder_image()
-
-    content = front_matter(title, lang, image_url) + "\n" + body(title, lang)
-    md_path.write_text(content, encoding="utf-8")
-
-    return str(md_path)
-
-# =========================
-# MAIN
-# =========================
 def main():
     run_id = datetime.utcnow().strftime("%H%M%S")
     print(f"[SEO AUTOPILOT] run_id={run_id}")
@@ -187,8 +188,8 @@ def main():
             time.sleep(1)
 
     print("Created files:")
-    for f in created:
-        print("-", f)
+    for p in created:
+        print("-", p)
 
 if __name__ == "__main__":
     main()
