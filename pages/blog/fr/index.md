@@ -2,6 +2,8 @@
 
 Derniers articles (clique pour lire) :
 
+- [Creation dapplication sur mesure etapes budget et delais](/blog/2026-03-09-creation-dapplication-sur-mesure-etapes-budget-et-delais-050248?lang=fr)
+- [Combien coute une application mobile en 2026](/blog/2026-03-09-combien-coute-une-application-mobile-en-2026-050248?lang=fr)
 - [Creation dapplication sur mesure etapes budget et delais](/blog/2026-03-02-creation-dapplication-sur-mesure-etapes-budget-et-delais-045839?lang=fr)
 - [Combien coute une application mobile en 2026](/blog/2026-03-02-combien-coute-une-application-mobile-en-2026-045839?lang=fr)
 - [Creation dapplication sur mesure etapes budget et delais](/blog/2026-02-23-creation-dapplication-sur-mesure-etapes-budget-et-delais-050955?lang=fr)
