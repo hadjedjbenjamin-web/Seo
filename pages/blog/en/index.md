@@ -2,6 +2,8 @@
 
 Latest posts (click to read):
 
+- [Mobile app development cost in 2026](/blog/2026-08-03-mobile-app-development-cost-in-2026-063532?lang=en)
+- [Custom app development timeline budget and process](/blog/2026-08-03-custom-app-development-timeline-budget-and-process-063532?lang=en)
 - [Mobile app development cost in 2026](/blog/2026-07-27-mobile-app-development-cost-in-2026-064234?lang=en)
 - [Custom app development timeline budget and process](/blog/2026-07-27-custom-app-development-timeline-budget-and-process-064234?lang=en)
 - [Mobile app development cost in 2026](/blog/2026-07-20-mobile-app-development-cost-in-2026-062601?lang=en)
@@ -50,5 +52,3 @@ Latest posts (click to read):
 - [Custom app development timeline budget and process](/blog/2026-02-23-custom-app-development-timeline-budget-and-process-050955?lang=en)
 - [Mobile app development cost in 2026](/blog/2026-02-16-mobile-app-development-cost-in-2026-051142?lang=en)
 - [Custom app development timeline budget and process](/blog/2026-02-16-custom-app-development-timeline-budget-and-process-051142?lang=en)
-- [Mobile app development cost in 2026](/blog/2026-02-09-mobile-app-development-cost-in-2026-051228?lang=en)
-- [Custom app development timeline budget and process](/blog/2026-02-09-custom-app-development-timeline-budget-and-process-051228?lang=en)
