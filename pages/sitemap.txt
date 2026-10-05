@@ -1,6 +1,8 @@
 https://www.bktech.dev/blog
 https://www.bktech.dev/blog/fr
 https://www.bktech.dev/blog/en
+https://www.bktech.dev/blog/2026-10-05-creation-dapplication-sur-mesure-etapes-budget-et-delais-102949?lang=fr
+https://www.bktech.dev/blog/2026-10-05-combien-coute-une-application-mobile-en-2026-102949?lang=fr
 https://www.bktech.dev/blog/2026-09-28-creation-dapplication-sur-mesure-etapes-budget-et-delais-094945?lang=fr
 https://www.bktech.dev/blog/2026-09-28-combien-coute-une-application-mobile-en-2026-094945?lang=fr
 https://www.bktech.dev/blog/2026-09-21-creation-dapplication-sur-mesure-etapes-budget-et-delais-085927?lang=fr
@@ -93,6 +95,8 @@ https://www.bktech.dev/blog/2026-01-11-combien-coute-une-application-mobile-en-2
 https://www.bktech.dev/blog/2026-01-11-combien-coute-une-application-mobile-en-2026-202946?lang=fr
 https://www.bktech.dev/blog/2026-01-11-combien-coute-une-application-mobile-en-2026-201454?lang=fr
 https://www.bktech.dev/blog/2026-01-11-combien-coute-une-application-mobile-en-2026-122243?lang=fr
+https://www.bktech.dev/blog/2026-10-05-mobile-app-development-cost-in-2026-102949?lang=en
+https://www.bktech.dev/blog/2026-10-05-custom-app-development-timeline-budget-and-process-102949?lang=en
 https://www.bktech.dev/blog/2026-09-28-mobile-app-development-cost-in-2026-094945?lang=en
 https://www.bktech.dev/blog/2026-09-28-custom-app-development-timeline-budget-and-process-094945?lang=en
 https://www.bktech.dev/blog/2026-09-21-mobile-app-development-cost-in-2026-085927?lang=en
